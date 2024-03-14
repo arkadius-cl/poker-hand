@@ -36,8 +36,8 @@ public class FullHouseRuleTest {
         boolean applicable = fullHouseRule.applicable(hand);
 
         Assertions.assertThat(applicable).isTrue();
-        HandResult<Card> result = fullHouseRule.rank(hand);
+        HandResult<Card.Value> result = fullHouseRule.rank(hand);
         Assertions.assertThat(result.handRank()).isEqualTo(Hand.Rank.FULL_HOUSE);
-        Assertions.assertThat(result.payload().getValue()).isEqualTo(Card.Value.FOUR);
+        Assertions.assertThat(result.payload()).isEqualTo(Card.Value.FOUR);
     }
 }
