@@ -14,6 +14,7 @@ public class TwoPairsRule extends AbstractPokerRule<List<Card.Value>> {
 
     @Override
     public HandResult<List<Card.Value>> rank(Hand hand) {
-        return null;
+        List<Card.Value> foundPairs = getCardsSortedByCount(hand, 2);
+        return new HandResult<>(Hand.Rank.TWO_PAIR, foundPairs);
     }
 }
