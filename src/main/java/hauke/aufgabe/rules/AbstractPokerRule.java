@@ -15,12 +15,12 @@ public abstract class AbstractPokerRule<T> implements PokerRule<T>{
         );
     }
 
-    protected List<Card> getCardsSortedByCount(Hand hand, int count) {
-        return groupByValue(hand).values().stream()
-                .filter(cards -> cards.size() == count)
-                .flatMap(List::stream)
-                .sorted()
-                .collect(Collectors.toList());
+    protected List<Card.Value> getCardsSortedByCount(Hand hand, int count) {
+        return groupByValue(hand).entrySet().stream()
+                .filter(cardEntry -> cardEntry.getValue().size() == count)
+                .map(Map.Entry::getKey)
+                .distinct()
+                .toList();
     }
 
     protected Card getConsecutiveValuesAndReturnHighestValueCard(Hand hand) {
