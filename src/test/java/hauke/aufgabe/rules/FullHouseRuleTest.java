@@ -2,6 +2,7 @@ package hauke.aufgabe.rules;
 
 import hauke.aufgabe.Card;
 import hauke.aufgabe.Hand;
+import hauke.aufgabe.HandResult;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -35,5 +36,8 @@ public class FullHouseRuleTest {
         boolean applicable = fullHouseRule.applicable(hand);
 
         Assertions.assertThat(applicable).isTrue();
+        HandResult<Card> result = fullHouseRule.rank(hand);
+        Assertions.assertThat(result.handRank()).isEqualTo(Hand.Rank.FULL_HOUSE);
+        Assertions.assertThat(result.payload().getValue()).isEqualTo(Card.Value.FOUR);
     }
 }
