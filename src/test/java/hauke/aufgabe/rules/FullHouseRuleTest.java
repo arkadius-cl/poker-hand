@@ -21,4 +21,19 @@ public class FullHouseRuleTest {
 
         Assertions.assertThat(applicable).isFalse();
     }
+
+    @Test
+    public void handWithFullHouse_shouldBeApplicable() {
+        Hand hand = new Hand();
+        hand.addCard(new Card(Card.Value.TWO, Card.Suit.CLUBS));
+        hand.addCard(new Card(Card.Value.TWO, Card.Suit.SPADES));
+        hand.addCard(new Card(Card.Value.FOUR, Card.Suit.CLUBS));
+        hand.addCard(new Card(Card.Value.FOUR, Card.Suit.HEARTS));
+        hand.addCard(new Card(Card.Value.FOUR, Card.Suit.DIAMONDS));
+
+        FullHouseRule fullHouseRule = new FullHouseRule();
+        boolean applicable = fullHouseRule.applicable(hand);
+
+        Assertions.assertThat(applicable).isTrue();
+    }
 }
