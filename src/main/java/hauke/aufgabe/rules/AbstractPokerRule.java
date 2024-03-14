@@ -33,5 +33,8 @@ public abstract class AbstractPokerRule<T> implements PokerRule<T>{
         return cards.getLast();
     }
 
+    protected boolean isOneSuit(Hand hand) {
+        return hand.getCards().stream().map(Card::getSuit).distinct().count() == 1;
+    }
 
 }
