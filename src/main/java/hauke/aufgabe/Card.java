@@ -1,8 +1,10 @@
 package hauke.aufgabe;
 
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
+@Getter
 @RequiredArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Card implements Comparable<Card> {
