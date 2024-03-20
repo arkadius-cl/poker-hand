@@ -10,7 +10,6 @@ public class PairRuleTest {
 
     @Test
     public void handWithOnePair_shouldReturnPairResult() {
-
         Hand hand = new Hand();
         hand.addCard(new Card(Card.Value.ACE, Card.Suit.HEARTS));
         hand.addCard(new Card(Card.Value.ACE, Card.Suit.DIAMONDS));
@@ -27,7 +26,6 @@ public class PairRuleTest {
 
     @Test
     public void handWithoutPair_shouldReturnNoPairResult() {
-
         Hand hand = new Hand();
         hand.addCard(new Card(Card.Value.ACE, Card.Suit.HEARTS));
         hand.addCard(new Card(Card.Value.KING, Card.Suit.HEARTS));
@@ -41,7 +39,6 @@ public class PairRuleTest {
 
     @Test
     public void handWithTwoPairs_shouldNotBeApplicable() {
-
         Hand hand = new Hand();
         hand.addCard(new Card(Card.Value.ACE, Card.Suit.HEARTS));
         hand.addCard(new Card(Card.Value.ACE, Card.Suit.DIAMONDS));
@@ -49,6 +46,20 @@ public class PairRuleTest {
         hand.addCard(new Card(Card.Value.KING, Card.Suit.DIAMONDS));
         hand.addCard(new Card(Card.Value.JACK, Card.Suit.HEARTS));
 
+        PairRule pairRule = new PairRule();
+        Assertions.assertThat(pairRule.applicable(hand)).isFalse();
+    }
+
+    @Test
+    public void nullHand_shouldNotBeApplicable() {
+        Hand hand = null;
+        PairRule pairRule = new PairRule();
+        Assertions.assertThat(pairRule.applicable(hand)).isFalse();
+    }
+
+    @Test
+    public void emptyHand_shouldNotBeApplicable() {
+        Hand hand = new Hand();
         PairRule pairRule = new PairRule();
         Assertions.assertThat(pairRule.applicable(hand)).isFalse();
     }

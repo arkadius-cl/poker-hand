@@ -51,4 +51,19 @@ public class TwoPairsRuleTest {
         TwoPairsRule twoPairsRule = new TwoPairsRule();
         Assertions.assertThat(twoPairsRule.applicable(hand)).isFalse();
     }
+
+    @Test
+    public void nullHand_shouldNotBeApplicable() {
+        Hand hand = null;
+        TwoPairsRule twoPairsRule = new TwoPairsRule();
+        Assertions.assertThat(twoPairsRule.applicable(hand)).isFalse();
+    }
+
+    @Test
+    public void emptyHand_shouldNotBeApplicable() {
+        Hand hand = new Hand();
+        TwoPairsRule twoPairsRule = new TwoPairsRule();
+        Assertions.assertThat(twoPairsRule.applicable(hand)).isFalse();
+    }
+
 }

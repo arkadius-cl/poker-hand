@@ -39,4 +39,35 @@ public class FlushRuleTest {
         Assertions.assertThat(result.handRank()).isEqualTo(Hand.Rank.FLUSH);
         Assertions.assertThat(result.payload()).isSortedAccordingTo(Comparator.comparing(Card::getValue).reversed());
     }
+
+    @Test
+    public void handWithAceLowFlush_shouldBeApplicableAndReturnReversedListOfCards() {
+        Hand hand = new Hand();
+        hand.addCard(new Card(Card.Value.ACE, Card.Suit.CLUBS));
+        hand.addCard(new Card(Card.Value.TWO, Card.Suit.CLUBS));
+        hand.addCard(new Card(Card.Value.THREE, Card.Suit.CLUBS));
+        hand.addCard(new Card(Card.Value.FOUR, Card.Suit.CLUBS));
+        hand.addCard(new Card(Card.Value.FIVE, Card.Suit.CLUBS));
+
+        FlushRule flushRule = new FlushRule();
+        Assertions.assertThat(flushRule.applicable(hand)).isTrue();
+        HandResult<List<Card>> result = flushRule.rank(hand);
+        Assertions.assertThat(result.handRank()).isEqualTo(Hand.Rank.FLUSH);
+        Assertions.assertThat(result.payload()).isSortedAccordingTo(Comparator.comparing(Card::getValue).reversed());
+    }
+
+    @Test
+    public void emptyHand_shouldNotBeApplicable() {
+        Hand hand = new Hand();
+        FlushRule flushRule = new FlushRule();
+        Assertions.assertThat(flushRule.applicable(hand)).isFalse();
+    }
+
+    @Test
+    public void nullHand_shouldNotBeApplicable() {
+        Hand hand = null;
+        FlushRule flushRule = new FlushRule();
+        Assertions.assertThat(flushRule.applicable(hand)).isFalse();
+    }
+
 }

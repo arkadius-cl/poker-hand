@@ -36,4 +36,31 @@ public class ThreeOfKindRuleTest {
         Assertions.assertThat(result.handRank()).isEqualTo(Hand.Rank.THREE_OF_A_KIND);
         Assertions.assertThat(result.payload()).isEqualTo(Card.Value.TWO);
     }
+
+    @Test
+    public void handWithFourOfKind_shouldNotBeApplicable(){
+        Hand hand  = new Hand();
+        hand.addCard(new Card(Card.Value.TWO, Card.Suit.CLUBS));
+        hand.addCard(new Card(Card.Value.TWO, Card.Suit.DIAMONDS));
+        hand.addCard(new Card(Card.Value.TWO, Card.Suit.HEARTS));
+        hand.addCard(new Card(Card.Value.TWO, Card.Suit.SPADES));
+        hand.addCard(new Card(Card.Value.FOUR, Card.Suit.CLUBS));
+
+        ThreeOfKindRule threeOfKindRule = new ThreeOfKindRule();
+        Assertions.assertThat(threeOfKindRule.applicable(hand)).isFalse();
+    }
+
+    @Test
+    public void nullHand_shouldNotBeApplicable(){
+        Hand hand = null;
+        ThreeOfKindRule threeOfKindRule = new ThreeOfKindRule();
+        Assertions.assertThat(threeOfKindRule.applicable(hand)).isFalse();
+    }
+
+    @Test
+    public void emptyHand_shouldNotBeApplicable(){
+        Hand hand = new Hand();
+        ThreeOfKindRule threeOfKindRule = new ThreeOfKindRule();
+        Assertions.assertThat(threeOfKindRule.applicable(hand)).isFalse();
+    }
 }

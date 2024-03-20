@@ -25,4 +25,33 @@ public class HighCardRuleTest {
         HandResult<List<Card>> result = highCardRule.rank(hand);
         Assertions.assertThat(result.payload()).isSortedAccordingTo(Comparator.comparing(Card::getValue).reversed());
     }
+
+    @Test
+    public void handWithAceAsHighestCard_shouldReturnHighCardResult() {
+        Hand hand = new Hand();
+        hand.addCard(new Card(Card.Value.ACE, Card.Suit.HEARTS));
+        hand.addCard(new Card(Card.Value.FOUR, Card.Suit.HEARTS));
+        hand.addCard(new Card(Card.Value.TWO, Card.Suit.HEARTS));
+        hand.addCard(new Card(Card.Value.EIGHT, Card.Suit.HEARTS));
+        hand.addCard(new Card(Card.Value.FIVE, Card.Suit.HEARTS));
+
+        HighCardRule highCardRule = new HighCardRule();
+        Assertions.assertThat(highCardRule.applicable(hand)).isTrue();
+        HandResult<List<Card>> result = highCardRule.rank(hand);
+        Assertions.assertThat(result.payload()).isSortedAccordingTo(Comparator.comparing(Card::getValue).reversed());
+    }
+
+    @Test
+    public void handWithNoCards_shouldNotBeApplicable() {
+        Hand hand = new Hand();
+        HighCardRule highCardRule = new HighCardRule();
+        Assertions.assertThat(highCardRule.applicable(hand)).isFalse();
+    }
+
+    @Test
+    public void nullHand_shouldNotBeApplicable() {
+        Hand hand = null;
+        HighCardRule highCardRule = new HighCardRule();
+        Assertions.assertThat(highCardRule.applicable(hand)).isFalse();
+    }
 }
