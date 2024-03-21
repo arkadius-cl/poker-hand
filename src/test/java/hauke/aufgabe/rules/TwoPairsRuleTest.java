@@ -36,7 +36,7 @@ public class TwoPairsRuleTest {
         Assertions.assertThat(twoPairsRule.applicable(hand)).isTrue();
         HandResult<List<Card.Value>> result = twoPairsRule.rank(hand);
         Assertions.assertThat(result.handRank()).isEqualTo(Hand.Rank.TWO_PAIR);
-        Assertions.assertThat(result.payload()).describedAs("Shuld only contain Card.Value.TWO and Card.Value.QUEEN").containsExactlyInAnyOrder(Card.Value.TWO, Card.Value.QUEEN);
+        Assertions.assertThat(result.payload()).describedAs("Should only contain Card.Value.TWO and Card.Value.QUEEN").containsExactlyInAnyOrder(Card.Value.TWO, Card.Value.QUEEN);
     }
 
     @Test
