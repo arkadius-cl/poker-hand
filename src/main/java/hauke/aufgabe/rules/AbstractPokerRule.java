@@ -5,9 +5,18 @@ import hauke.aufgabe.Hand;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public abstract class AbstractPokerRule<T> implements PokerRule<T>{
+
+    protected Optional<Hand> isValidHand(Hand hand) {
+        return Optional.ofNullable(hand)
+                .filter(h -> h.getCards().size() == 5);
+    }
 
     protected Map<Card.Value, List<Card>> groupByValue(Hand hand) {
         return hand.getCards().stream().collect(
