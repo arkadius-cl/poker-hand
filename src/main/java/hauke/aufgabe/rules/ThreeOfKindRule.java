@@ -7,13 +7,16 @@ import hauke.aufgabe.HandResult;
 public class ThreeOfKindRule extends AbstractPokerRule<Card.Value> {
     @Override
     public boolean applicable(Hand hand) {
-        return getCardsSortedByCount(hand, 3).size() == 1;
+        return isValidHand(hand).filter(element -> getCardsSortedByCount(element, 3).size() == 1).isPresent();
     }
 
     @Override
     public HandResult<Card.Value> rank(Hand hand) {
-        return getCardsSortedByCount(hand, 3).stream()
-                .map(card -> new HandResult<>(Hand.Rank.THREE_OF_A_KIND, card))
-                .toList().getFirst();
+        return isValidHand(hand)
+                .map(element -> getCardsSortedByCount(element, 3))
+                .filter(elementsList -> elementsList.size() == 1)
+                .map(elementsList -> new HandResult<>(Hand.Rank.THREE_OF_A_KIND, elementsList.getFirst()))
+                .orElse(null);
+
     }
 }
