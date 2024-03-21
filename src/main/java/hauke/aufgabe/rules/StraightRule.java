@@ -4,14 +4,16 @@ import hauke.aufgabe.Card;
 import hauke.aufgabe.Hand;
 import hauke.aufgabe.HandResult;
 
-public class StraightRule extends AbstractPokerRule<Card>{
+public class StraightRule extends AbstractPokerRule<Card.Value> {
     @Override
     public boolean applicable(Hand hand) {
-        return getConsecutiveValuesAndReturnHighestValueCard(hand) != null;
+        return isValidHand(hand)
+                .filter(element -> getConsecutiveValuesAndReturnHighestValueCard(element) != null)
+                .isPresent();
     }
 
     @Override
-    public HandResult<Card> rank(Hand hand) {
-        return new HandResult<>(Hand.Rank.STRAIGHT, getConsecutiveValuesAndReturnHighestValueCard(hand));
+    public HandResult<Card.Value> rank(Hand hand) {
+        return isValidHand(hand).map(this::getConsecutiveValuesAndReturnHighestValueCard).map(element -> new HandResult<>(Hand.Rank.STRAIGHT, element)).orElse(null);
     }
 }

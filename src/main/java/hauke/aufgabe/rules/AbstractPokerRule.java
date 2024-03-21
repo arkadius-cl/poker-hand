@@ -3,12 +3,13 @@ package hauke.aufgabe.rules;
 import hauke.aufgabe.Card;
 import hauke.aufgabe.Hand;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public abstract class AbstractPokerRule<T> implements PokerRule<T>{
+public abstract class AbstractPokerRule<T> implements PokerRule<T> {
 
     protected Optional<Hand> isValidHand(Hand hand) {
         return Optional.ofNullable(hand)
@@ -29,14 +30,16 @@ public abstract class AbstractPokerRule<T> implements PokerRule<T>{
                 .toList();
     }
 
-    protected Card getConsecutiveValuesAndReturnHighestValueCard(Hand hand) {
-        List<Card> cards = hand.getCards().stream().sorted().toList();
-        for (int i = 0; i < cards.size() - 1; i++) {
-            if (cards.get(i).getValue().ordinal() + 1 != cards.get(i + 1).getValue().ordinal()) {
+    protected Card.Value getConsecutiveValuesAndReturnHighestValueCard(Hand hand) {
+        List<Card.Value> cards = hand.getCards().stream().map(Card::getValue).sorted().toList();
+        boolean aceLowStraight = Collections.indexOfSubList(cards, List.of(Card.Value.TWO, Card.Value.THREE, Card.Value.FOUR, Card.Value.FIVE, Card.Value.ACE)) != -1;
+        int cardsSize = aceLowStraight ? 3 : 4;
+        for (int i = 0; i < cardsSize; i++) {
+            if (cards.get(i).ordinal() + 1 != cards.get(i + 1).ordinal()) {
                 return null;
             }
         }
-        return cards.getLast();
+        return aceLowStraight ? cards.get(3) : cards.getLast();
     }
 
     protected boolean isOneSuit(Hand hand) {

@@ -34,9 +34,9 @@ public class StraightRuleTest {
         StraightRule straightRule = new StraightRule();
         boolean applicable = straightRule.applicable(hand);
         Assertions.assertThat(applicable).isTrue();
-        HandResult<Card> result = straightRule.rank(hand);
+        HandResult<Card.Value> result = straightRule.rank(hand);
         Assertions.assertThat(result.handRank()).isEqualTo(Hand.Rank.STRAIGHT);
-        Assertions.assertThat(result.payload().getValue()).isEqualTo(Card.Value.SIX);
+        Assertions.assertThat(result.payload()).isEqualTo(Card.Value.SIX);
     }
 
     @Test
@@ -51,9 +51,26 @@ public class StraightRuleTest {
         StraightRule straightRule = new StraightRule();
         boolean applicable = straightRule.applicable(hand);
         Assertions.assertThat(applicable).isTrue();
-        HandResult<Card> result = straightRule.rank(hand);
+        HandResult<Card.Value> result = straightRule.rank(hand);
         Assertions.assertThat(result.handRank()).isEqualTo(Hand.Rank.STRAIGHT);
-        Assertions.assertThat(result.payload().getValue()).isEqualTo(Card.Value.FIVE);
+        Assertions.assertThat(result.payload()).isEqualTo(Card.Value.FIVE);
+    }
+
+    @Test
+    public void handWithAceHighStraight_shouldBeApplicable() {
+        Hand hand = new Hand();
+        hand.addCard(new Card(Card.Value.TEN, Card.Suit.DIAMONDS));
+        hand.addCard(new Card(Card.Value.JACK, Card.Suit.CLUBS));
+        hand.addCard(new Card(Card.Value.QUEEN, Card.Suit.SPADES));
+        hand.addCard(new Card(Card.Value.KING, Card.Suit.SPADES));
+        hand.addCard(new Card(Card.Value.ACE, Card.Suit.CLUBS));
+
+        StraightRule straightRule = new StraightRule();
+        boolean applicable = straightRule.applicable(hand);
+        Assertions.assertThat(applicable).isTrue();
+        HandResult<Card.Value> result = straightRule.rank(hand);
+        Assertions.assertThat(result.handRank()).isEqualTo(Hand.Rank.STRAIGHT);
+        Assertions.assertThat(result.payload()).isEqualTo(Card.Value.ACE);
     }
 
     @Test
