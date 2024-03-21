@@ -9,12 +9,11 @@ import java.util.List;
 public class PairRule extends AbstractPokerRule<Card.Value>{
     @Override
     public boolean applicable(Hand hand) {
-        return getCardsSortedByCount(hand, 2).size() == 1;
+        return isValidHand(hand).filter(element -> this.getCardsSortedByCount(element, 2).size() == 1).isPresent();
     }
 
     @Override
     public HandResult<Card.Value> rank(Hand hand) {
-        List<Card.Value> foundPair = getCardsSortedByCount(hand, 2);
-        return new HandResult<>(Hand.Rank.PAIR, foundPair.getFirst());
+        return isValidHand(hand).map(element -> new HandResult<>(Hand.Rank.PAIR, getCardsSortedByCount(element, 2).getFirst())).orElse(null);
     }
 }
