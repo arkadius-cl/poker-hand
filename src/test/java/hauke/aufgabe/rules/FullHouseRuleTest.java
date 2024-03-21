@@ -24,7 +24,7 @@ public class FullHouseRuleTest {
     }
 
     @Test
-    public void handWithFullHouse_shouldBeApplicable() {
+    public void handWithFullHouse_shouldBeApplicableAndReturnFullHouseRank() {
         Hand hand = new Hand();
         hand.addCard(new Card(Card.Value.TWO, Card.Suit.CLUBS));
         hand.addCard(new Card(Card.Value.TWO, Card.Suit.SPADES));
