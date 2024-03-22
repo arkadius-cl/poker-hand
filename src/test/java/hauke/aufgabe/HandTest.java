@@ -19,7 +19,7 @@ public class HandTest {
         Hand hand = new Hand();
         Card card = new Card();
         hand.addCard(card);
-        Assertions.assertThatThrownBy(() -> hand.addCard(card)).isInstanceOf(IllegalArgumentException.class);
+        Assertions.assertThatThrownBy(() -> hand.addCard(card)).isInstanceOf(IllegalArgumentException.class).hasMessage("Card is already in hand");
     }
 
     @Test
