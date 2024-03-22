@@ -1,30 +1,26 @@
 package hauke.aufgabe;
 
 import hauke.aufgabe.rules.*;
+import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
+@NoArgsConstructor
 public class Game {
 
-    List<PokerRule> rules = new ArrayList<>();
+    private final List<PokerRule> rules = List.of(
+            new StraightFlushRule(),
+            new FourOfKindRule(),
+            new FullHouseRule(),
+            new FlushRule(),
+            new StraightRule(),
+            new ThreeOfKindRule(),
+            new TwoPairsRule(),
+            new PairRule(),
+            new HighCardRule()
+    );
 
-    public Game() {
-        loadRules();
-    }
-
-    private void loadRules() {
-        rules.add(new StraightFlushRule());
-        rules.add(new FourOfKindRule());
-        rules.add(new FullHouseRule());
-        rules.add(new FlushRule());
-        rules.add(new StraightRule());
-        rules.add(new ThreeOfKindRule());
-        rules.add(new TwoPairsRule());
-        rules.add(new PairRule());
-        rules.add(new HighCardRule());
-    }
 
     public <T> HandResult<T> evaluateHand(Hand hand) {
         for (PokerRule rule : rules) {
