@@ -1,12 +1,11 @@
 package hauke.aufgabe;
 
-import lombok.NoArgsConstructor;
+import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-@NoArgsConstructor
 public class Hand {
 
     public enum Rank {
@@ -20,6 +19,18 @@ public class Hand {
         FOUR_OF_A_KIND,
         STRAIGHT_FLUSH;
     }
+
+    @Getter
+    private final String name;
+
+    public Hand() {
+        this.name = "Unnamed " + ((int) (Math.random() * 1000));
+    }
+
+    public Hand(String name) {
+        this.name = name;
+    }
+
     private final List<Card> cards = new ArrayList<>();
 
     /**
