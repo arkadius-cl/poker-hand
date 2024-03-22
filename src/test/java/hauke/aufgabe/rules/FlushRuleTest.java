@@ -11,6 +11,21 @@ import java.util.List;
 
 public class FlushRuleTest {
 
+
+    @Test
+    public void emptyHand_shouldNotBeApplicable() {
+        Hand hand = new Hand();
+        FlushRule flushRule = new FlushRule();
+        Assertions.assertThat(flushRule.applicable(hand)).isFalse();
+    }
+
+    @Test
+    public void nullHand_shouldNotBeApplicable() {
+        Hand hand = null;
+        FlushRule flushRule = new FlushRule();
+        Assertions.assertThat(flushRule.applicable(hand)).isFalse();
+    }
+
     @Test
     public void handWithNoFlush_shudNotBeApplicable() {
         Hand hand = new Hand();
@@ -57,15 +72,14 @@ public class FlushRuleTest {
     }
 
     @Test
-    public void emptyHand_shouldNotBeApplicable() {
+    public void handWithTwoPairs_shouldNotBeApplicable() {
         Hand hand = new Hand();
-        FlushRule flushRule = new FlushRule();
-        Assertions.assertThat(flushRule.applicable(hand)).isFalse();
-    }
+        hand.addCard(new Card(Card.Value.TWO, Card.Suit.HEARTS));
+        hand.addCard(new Card(Card.Value.TWO, Card.Suit.DIAMONDS));
+        hand.addCard(new Card(Card.Value.THREE, Card.Suit.HEARTS));
+        hand.addCard(new Card(Card.Value.THREE, Card.Suit.DIAMONDS));
+        hand.addCard(new Card(Card.Value.ACE, Card.Suit.HEARTS));
 
-    @Test
-    public void nullHand_shouldNotBeApplicable() {
-        Hand hand = null;
         FlushRule flushRule = new FlushRule();
         Assertions.assertThat(flushRule.applicable(hand)).isFalse();
     }
