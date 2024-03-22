@@ -2,7 +2,7 @@ package hauke.aufgabe.rules;
 
 import hauke.aufgabe.Card;
 import hauke.aufgabe.Hand;
-import hauke.aufgabe.HandResult;
+import hauke.aufgabe.EvaluationResult;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -12,13 +12,13 @@ public class FourOfKindRuleTest {
     public void emptyHand_shouldNotBeApplicable() {
         Hand hand = new Hand();
         FourOfKindRule rule = new FourOfKindRule();
-        Assertions.assertThat(rule.applicable(hand)).isFalse();
+        Assertions.assertThat(rule.isApplicable(hand)).isFalse();
     }
 
     @Test
     public void nullHand_shouldNotBeApplicable() {
         FourOfKindRule rule = new FourOfKindRule();
-        Assertions.assertThat(rule.applicable(null)).isFalse();
+        Assertions.assertThat(rule.isApplicable(null)).isFalse();
     }
 
     @Test
@@ -30,9 +30,9 @@ public class FourOfKindRuleTest {
         hand.addCard(new Card(Card.Value.TWO, Card.Suit.SPADES));
         hand.addCard(new Card(Card.Value.THREE, Card.Suit.CLUBS));
         FourOfKindRule rule = new FourOfKindRule();
-        Assertions.assertThat(rule.applicable(hand)).isTrue();
-        HandResult<Card.Value> result = rule.rank(hand);
-        Assertions.assertThat(result.payload()).isEqualTo(Card.Value.TWO);
+        Assertions.assertThat(rule.isApplicable(hand)).isTrue();
+        EvaluationResult<Card.Value> result = rule.evaluate(hand);
+        Assertions.assertThat(result.result()).isEqualTo(Card.Value.TWO);
         Assertions.assertThat(result.handRank()).isEqualTo(Hand.Rank.FOUR_OF_A_KIND);
 
     }
@@ -46,7 +46,7 @@ public class FourOfKindRuleTest {
         hand.addCard(new Card(Card.Value.THREE, Card.Suit.SPADES));
         hand.addCard(new Card(Card.Value.FOUR, Card.Suit.CLUBS));
         FourOfKindRule rule = new FourOfKindRule();
-        Assertions.assertThat(rule.applicable(hand)).isFalse();
+        Assertions.assertThat(rule.isApplicable(hand)).isFalse();
     }
 
 }
