@@ -43,23 +43,27 @@ public class Card {
         return elements[randomIndex];
     }
 
+
     /**
-     * Compares this card to another card in ascending order.
+     * Compares two cards in ascending order based on their values.
      *
-     * @param o the other card to compare to
-     * @return a negative integer, zero, or a positive integer as this card is less than, equal to, or greater than the
-     * other card
+     * @param first  the first card to compare
+     * @param second the second card to compare
+     * @return a negative integer if the first card is less than the second card, zero if they are equal,
+     *         or a positive integer if the first card is greater than the second card
      */
     public static int compareAscending(Card first, Card second) {
         return Integer.compare(first.value.ordinal(), second.value.ordinal());
     }
 
+
     /**
-     * Compares this card to another card in descending order.
+     * Compares two cards in descending order based on their values.
      *
-     * @param o the other card to compare to
-     * @return a negative integer, zero, or a positive integer as this card is less than, equal to, or greater than the
-     * other card
+     * @param first  the first card to compare
+     * @param second the second card to compare
+     * @return a negative integer if the first card is greater than the second card, zero if they are equal,
+     *         or a positive integer if the first card is less than the second card
      */
     public static int compareDescending(Card first, Card second) {
         return Integer.compare(second.value.ordinal(), first.value.ordinal());

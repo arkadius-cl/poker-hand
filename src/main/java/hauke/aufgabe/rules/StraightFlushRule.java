@@ -3,7 +3,6 @@ package hauke.aufgabe.rules;
 import hauke.aufgabe.Card;
 import hauke.aufgabe.Hand;
 import hauke.aufgabe.problem.EvaluationException;
-import hauke.aufgabe.result.EvaluationResult;
 import hauke.aufgabe.result.ValueResult;
 
 import java.util.function.Predicate;

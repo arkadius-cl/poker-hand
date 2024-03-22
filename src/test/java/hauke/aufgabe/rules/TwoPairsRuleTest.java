@@ -32,7 +32,7 @@ public class TwoPairsRuleTest {
 
         TwoPairsRule twoPairsRule = new TwoPairsRule();
         Assertions.assertThat(twoPairsRule.isApplicable(hand)).isTrue();
-        ValuesListResult result = (ValuesListResult) twoPairsRule.evaluate(hand);
+        ValuesListResult result = twoPairsRule.evaluate(hand);
         Assertions.assertThat(result.rank()).isEqualTo(Hand.Rank.TWO_PAIR);
         Assertions.assertThat(result.value()).describedAs("Should only contain Card.Value.TWO and Card.Value.QUEEN").containsExactlyInAnyOrder(Card.Value.TWO, Card.Value.QUEEN);
     }
