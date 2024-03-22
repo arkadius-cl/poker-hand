@@ -57,6 +57,21 @@ public class FullHouseRuleTest {
     }
 
     @Test
+    public void handWithThreeOfKind_shouldNotbeApplicable() {
+        Hand hand = new Hand();
+        hand.addCard(new Card(Card.Value.TWO, Card.Suit.HEARTS));
+        hand.addCard(new Card(Card.Value.TWO, Card.Suit.DIAMONDS));
+        hand.addCard(new Card(Card.Value.TWO, Card.Suit.CLUBS));
+        hand.addCard(new Card(Card.Value.THREE, Card.Suit.DIAMONDS));
+        hand.addCard(new Card(Card.Value.ACE, Card.Suit.HEARTS));
+
+        FullHouseRule fullHouseRule = new FullHouseRule();
+        boolean applicable = fullHouseRule.applicable(hand);
+
+        Assertions.assertThat(applicable).isFalse();
+    }
+
+    @Test
     public void nullHand_shouldNotBeApplicable() {
         Hand hand = null;
         FullHouseRule fullHouseRule = new FullHouseRule();
