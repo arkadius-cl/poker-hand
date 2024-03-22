@@ -7,12 +7,7 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class Card implements Comparable<Card> {
-    @Override
-    public int compareTo(Card o) {
-        return Integer.compare(this.value.ordinal(), o.value.ordinal());
-    }
-
+public class Card {
     public enum Value {
         TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, TEN, JACK, QUEEN, KING, ACE
     }
@@ -46,6 +41,28 @@ public class Card implements Comparable<Card> {
     private <T> T randomElement(T[] elements) {
         int randomIndex = (int) (Math.random() * elements.length);
         return elements[randomIndex];
+    }
+
+    /**
+     * Compares this card to another card in ascending order.
+     *
+     * @param o the other card to compare to
+     * @return a negative integer, zero, or a positive integer as this card is less than, equal to, or greater than the
+     * other card
+     */
+    public static int compareAscending(Card first, Card second) {
+        return Integer.compare(first.value.ordinal(), second.value.ordinal());
+    }
+
+    /**
+     * Compares this card to another card in descending order.
+     *
+     * @param o the other card to compare to
+     * @return a negative integer, zero, or a positive integer as this card is less than, equal to, or greater than the
+     * other card
+     */
+    public static int compareDescending(Card first, Card second) {
+        return Integer.compare(second.value.ordinal(), first.value.ordinal());
     }
 
 }

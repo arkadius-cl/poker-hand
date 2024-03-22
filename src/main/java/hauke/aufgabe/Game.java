@@ -1,5 +1,6 @@
 package hauke.aufgabe;
 
+import hauke.aufgabe.result.EvaluationResult;
 import hauke.aufgabe.rules.*;
 import lombok.NoArgsConstructor;
 
@@ -9,7 +10,7 @@ import java.util.List;
 @NoArgsConstructor
 public class Game {
 
-    private final List<PokerRule> rules = List.of(
+    private final List<EvaluationRule> rules = List.of(
             new StraightFlushRule(),
             new FourOfKindRule(),
             new FullHouseRule(),
@@ -22,10 +23,10 @@ public class Game {
     );
 
 
-    public <T> HandResult<T> evaluateHand(Hand hand) {
-        for (PokerRule rule : rules) {
-            if (rule.applicable(hand)) {
-                return rule.rank(hand);
+    public EvaluationResult evaluateHand(Hand hand) {
+        for (EvaluationRule rule : rules) {
+            if (rule.isApplicable(hand)) {
+                return rule.evaluate(hand);
             }
         }
         return null;

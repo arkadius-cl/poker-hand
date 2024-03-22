@@ -1,4 +1,4 @@
 package hauke.aufgabe;
 
-public record HandResult<T>(Hand.Rank handRank, T payload ) {
+public record HandResult(Hand.Rank handRank, Object result) {
 }

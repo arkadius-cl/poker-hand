@@ -2,16 +2,24 @@ package hauke.aufgabe.rules;
 
 import hauke.aufgabe.Card;
 import hauke.aufgabe.Hand;
-import hauke.aufgabe.HandResult;
+import hauke.aufgabe.problem.EvaluationException;
+import hauke.aufgabe.result.ValueResult;
 
-public class PairRule extends AbstractPokerRule<Card.Value> {
+import java.util.List;
+import java.util.function.Predicate;
+
+public class PairRule extends AbstractPokerRule {
     @Override
-    public boolean applicable(Hand hand) {
-        return isValidHand(hand).filter(element -> this.getCardsSortedByCount(element, 2).size() == 1).isPresent();
+    public Predicate<Hand> applicationPredicate() {
+        return hand -> getCardValuesSortedByCount(hand, 2).size() == 1;
     }
 
     @Override
-    public HandResult<Card.Value> rank(Hand hand) {
-        return isValidHand(hand).map(element -> new HandResult<>(Hand.Rank.PAIR, getCardsSortedByCount(element, 2).getFirst())).orElse(null);
+    public ValueResult evaluate(Hand hand) throws EvaluationException {
+        List<Card.Value> pairValues = getCardValuesSortedByCount(hand, 2);
+        if (pairValues.size() != 1) {
+            throw new EvaluationException("Pair rule not applicable");
+        }
+        return new ValueResult(Hand.Rank.PAIR, pairValues.getFirst());
     }
 }

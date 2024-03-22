@@ -2,12 +2,11 @@ package hauke.aufgabe.rules;
 
 import hauke.aufgabe.Card;
 import hauke.aufgabe.Hand;
-import hauke.aufgabe.HandResult;
+import hauke.aufgabe.result.ValuesListResult;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.Comparator;
-import java.util.List;
 
 public class HighCardRuleTest {
 
@@ -21,9 +20,9 @@ public class HighCardRuleTest {
         hand.addCard(new Card(Card.Value.FIVE, Card.Suit.HEARTS));
 
         HighCardRule highCardRule = new HighCardRule();
-        Assertions.assertThat(highCardRule.applicable(hand)).isTrue();
-        HandResult<List<Card>> result = highCardRule.rank(hand);
-        Assertions.assertThat(result.payload()).isSortedAccordingTo(Comparator.comparing(Card::getValue).reversed());
+        Assertions.assertThat(highCardRule.isApplicable(hand)).isTrue();
+        ValuesListResult result = highCardRule.evaluate(hand);
+        Assertions.assertThat(result.value()).isSortedAccordingTo(Comparator.comparing(Card.Value::ordinal).reversed());
     }
 
     @Test
@@ -36,22 +35,22 @@ public class HighCardRuleTest {
         hand.addCard(new Card(Card.Value.FIVE, Card.Suit.HEARTS));
 
         HighCardRule highCardRule = new HighCardRule();
-        Assertions.assertThat(highCardRule.applicable(hand)).isTrue();
-        HandResult<List<Card>> result = highCardRule.rank(hand);
-        Assertions.assertThat(result.payload()).isSortedAccordingTo(Comparator.comparing(Card::getValue).reversed());
+        Assertions.assertThat(highCardRule.isApplicable(hand)).isTrue();
+        ValuesListResult result = highCardRule.evaluate(hand);
+        Assertions.assertThat(result.value()).isSortedAccordingTo(Comparator.comparing(Card.Value::ordinal).reversed());
     }
 
     @Test
     public void handWithNoCards_shouldNotBeApplicable() {
         Hand hand = new Hand();
         HighCardRule highCardRule = new HighCardRule();
-        Assertions.assertThat(highCardRule.applicable(hand)).isFalse();
+        Assertions.assertThat(highCardRule.isApplicable(hand)).isFalse();
     }
 
     @Test
     public void nullHand_shouldNotBeApplicable() {
         Hand hand = null;
         HighCardRule highCardRule = new HighCardRule();
-        Assertions.assertThat(highCardRule.applicable(hand)).isFalse();
+        Assertions.assertThat(highCardRule.isApplicable(hand)).isFalse();
     }
 }

@@ -7,26 +7,29 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
 
-public class CardTest {
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
+public class CardTest {
     @Test
-    public void listWithRandomCards_shouldBeSorted() {
-        List<Card> cards = new ArrayList<>();
-        cards.add(new Card(Card.Value.ACE, Card.Suit.CLUBS));
-        cards.add(new Card(Card.Value.TWO, Card.Suit.CLUBS));
-        cards.add(new Card(Card.Value.FIVE, Card.Suit.CLUBS));
-        cards.add(new Card(Card.Value.THREE, Card.Suit.CLUBS));
-        cards.add(new Card(Card.Value.FOUR, Card.Suit.CLUBS));
-        cards.sort(Card::compareTo);
-        Assertions.assertThat(cards).isSortedAccordingTo(Card::compareTo);
+    public void testCompareAscending() {
+        Card card1 = new Card(Card.Value.TWO, Card.Suit.HEARTS);
+        Card card2 = new Card(Card.Value.THREE, Card.Suit.HEARTS);
+
+        assertTrue(Card.compareAscending(card1, card2) < 0);
     }
 
     @Test
-    public void addRandomCardToList_shouldBeSorted() {
-        List<Card> cards = new ArrayList<>();
-        IntStream.range(0,10).forEach(i -> cards.add(new Card()));
-        cards.sort(Card::compareTo);
-        Assertions.assertThat(cards).isSortedAccordingTo(Card::compareTo);
+    public void testCompareDescending() {
+        Card card1 = new Card(Card.Value.TWO, Card.Suit.HEARTS);
+        Card card2 = new Card(Card.Value.THREE, Card.Suit.HEARTS);
+
+        assertTrue(Card.compareDescending(card1, card2) > 0);
+    }
+
+    @Test
+    public void oneHundredRandomCards_allShouldBeCorrect() {
+        List<Card> cards = IntStream.range(0, 100).mapToObj(i -> new Card()).toList();
+        Assertions.assertThat(cards).allMatch(card -> card.getValue() != null && card.getSuit() != null);
     }
 
 }

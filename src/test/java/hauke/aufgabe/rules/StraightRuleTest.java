@@ -2,7 +2,7 @@ package hauke.aufgabe.rules;
 
 import hauke.aufgabe.Card;
 import hauke.aufgabe.Hand;
-import hauke.aufgabe.HandResult;
+import hauke.aufgabe.result.ValueResult;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -18,7 +18,7 @@ public class StraightRuleTest {
         hand.addCard(new Card(Card.Value.SEVEN, Card.Suit.CLUBS));
         StraightRule straightRule = new StraightRule();
 
-        boolean applicable = straightRule.applicable(hand);
+        boolean applicable = straightRule.isApplicable(hand);
         Assertions.assertThat(applicable).isFalse();
     }
 
@@ -32,11 +32,10 @@ public class StraightRuleTest {
         hand.addCard(new Card(Card.Value.TWO, Card.Suit.CLUBS));
 
         StraightRule straightRule = new StraightRule();
-        boolean applicable = straightRule.applicable(hand);
-        Assertions.assertThat(applicable).isTrue();
-        HandResult<Card.Value> result = straightRule.rank(hand);
-        Assertions.assertThat(result.handRank()).isEqualTo(Hand.Rank.STRAIGHT);
-        Assertions.assertThat(result.payload()).isEqualTo(Card.Value.SIX);
+        Assertions.assertThat(straightRule.isApplicable(hand)).isTrue();
+        ValueResult result = straightRule.evaluate(hand);
+        Assertions.assertThat(result.rank()).isEqualTo(Hand.Rank.STRAIGHT);
+        Assertions.assertThat(result.value()).isEqualTo(Card.Value.SIX);
     }
 
     @Test
@@ -49,11 +48,10 @@ public class StraightRuleTest {
         hand.addCard(new Card(Card.Value.FIVE, Card.Suit.CLUBS));
 
         StraightRule straightRule = new StraightRule();
-        boolean applicable = straightRule.applicable(hand);
-        Assertions.assertThat(applicable).isTrue();
-        HandResult<Card.Value> result = straightRule.rank(hand);
-        Assertions.assertThat(result.handRank()).isEqualTo(Hand.Rank.STRAIGHT);
-        Assertions.assertThat(result.payload()).isEqualTo(Card.Value.FIVE);
+        Assertions.assertThat(straightRule.isApplicable(hand)).isTrue();
+        ValueResult result = straightRule.evaluate(hand);
+        Assertions.assertThat(result.rank()).isEqualTo(Hand.Rank.STRAIGHT);
+        Assertions.assertThat(result.value()).isEqualTo(Card.Value.FIVE);
     }
 
     @Test
@@ -66,18 +64,17 @@ public class StraightRuleTest {
         hand.addCard(new Card(Card.Value.ACE, Card.Suit.CLUBS));
 
         StraightRule straightRule = new StraightRule();
-        boolean applicable = straightRule.applicable(hand);
-        Assertions.assertThat(applicable).isTrue();
-        HandResult<Card.Value> result = straightRule.rank(hand);
-        Assertions.assertThat(result.handRank()).isEqualTo(Hand.Rank.STRAIGHT);
-        Assertions.assertThat(result.payload()).isEqualTo(Card.Value.ACE);
+        Assertions.assertThat(straightRule.isApplicable(hand)).isTrue();
+        ValueResult result = straightRule.evaluate(hand);
+        Assertions.assertThat(result.rank()).isEqualTo(Hand.Rank.STRAIGHT);
+        Assertions.assertThat(result.value()).isEqualTo(Card.Value.ACE);
     }
 
     @Test
     public void nullHand_shouldNotBeApplicable() {
         Hand hand = null;
         StraightRule straightRule = new StraightRule();
-        boolean applicable = straightRule.applicable(hand);
+        boolean applicable = straightRule.isApplicable(hand);
         Assertions.assertThat(applicable).isFalse();
     }
 
@@ -85,7 +82,7 @@ public class StraightRuleTest {
     public void emptyHand_shouldNotBeApplicable() {
         Hand hand = new Hand();
         StraightRule straightRule = new StraightRule();
-        boolean applicable = straightRule.applicable(hand);
+        boolean applicable = straightRule.isApplicable(hand);
         Assertions.assertThat(applicable).isFalse();
     }
 }

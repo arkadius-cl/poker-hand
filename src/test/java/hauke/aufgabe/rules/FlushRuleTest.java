@@ -2,12 +2,11 @@ package hauke.aufgabe.rules;
 
 import hauke.aufgabe.Card;
 import hauke.aufgabe.Hand;
-import hauke.aufgabe.HandResult;
+import hauke.aufgabe.result.ValuesListResult;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.Comparator;
-import java.util.List;
 
 public class FlushRuleTest {
 
@@ -16,14 +15,14 @@ public class FlushRuleTest {
     public void emptyHand_shouldNotBeApplicable() {
         Hand hand = new Hand();
         FlushRule flushRule = new FlushRule();
-        Assertions.assertThat(flushRule.applicable(hand)).isFalse();
+        Assertions.assertThat(flushRule.isApplicable(hand)).isFalse();
     }
 
     @Test
     public void nullHand_shouldNotBeApplicable() {
         Hand hand = null;
         FlushRule flushRule = new FlushRule();
-        Assertions.assertThat(flushRule.applicable(hand)).isFalse();
+        Assertions.assertThat(flushRule.isApplicable(hand)).isFalse();
     }
 
     @Test
@@ -36,7 +35,7 @@ public class FlushRuleTest {
         hand.addCard(new Card(Card.Value.SEVEN, Card.Suit.CLUBS));
 
         FlushRule flushRule = new FlushRule();
-        Assertions.assertThat(flushRule.applicable(hand)).isFalse();
+        Assertions.assertThat(flushRule.isApplicable(hand)).isFalse();
     }
 
     @Test
@@ -49,10 +48,10 @@ public class FlushRuleTest {
         hand.addCard(new Card(Card.Value.SEVEN, Card.Suit.CLUBS));
 
         FlushRule flushRule = new FlushRule();
-        Assertions.assertThat(flushRule.applicable(hand)).isTrue();
-        HandResult<List<Card>> result = flushRule.rank(hand);
-        Assertions.assertThat(result.handRank()).isEqualTo(Hand.Rank.FLUSH);
-        Assertions.assertThat(result.payload()).isSortedAccordingTo(Comparator.comparing(Card::getValue).reversed());
+        Assertions.assertThat(flushRule.isApplicable(hand)).isTrue();
+        ValuesListResult result = flushRule.evaluate(hand);
+        Assertions.assertThat(result.rank()).isEqualTo(Hand.Rank.FLUSH);
+        Assertions.assertThat(result.value()).isSortedAccordingTo(Comparator.comparing(Card.Value::ordinal).reversed());
     }
 
     @Test
@@ -65,10 +64,10 @@ public class FlushRuleTest {
         hand.addCard(new Card(Card.Value.FIVE, Card.Suit.CLUBS));
 
         FlushRule flushRule = new FlushRule();
-        Assertions.assertThat(flushRule.applicable(hand)).isTrue();
-        HandResult<List<Card>> result = flushRule.rank(hand);
-        Assertions.assertThat(result.handRank()).isEqualTo(Hand.Rank.FLUSH);
-        Assertions.assertThat(result.payload()).isSortedAccordingTo(Comparator.comparing(Card::getValue).reversed());
+        Assertions.assertThat(flushRule.isApplicable(hand)).isTrue();
+        ValuesListResult result = flushRule.evaluate(hand);
+        Assertions.assertThat(result.rank()).isEqualTo(Hand.Rank.FLUSH);
+        Assertions.assertThat(result.value()).isSortedAccordingTo(Comparator.comparing(Card.Value::ordinal).reversed());
     }
 
     @Test
@@ -81,7 +80,7 @@ public class FlushRuleTest {
         hand.addCard(new Card(Card.Value.ACE, Card.Suit.HEARTS));
 
         FlushRule flushRule = new FlushRule();
-        Assertions.assertThat(flushRule.applicable(hand)).isFalse();
+        Assertions.assertThat(flushRule.isApplicable(hand)).isFalse();
     }
 
 }

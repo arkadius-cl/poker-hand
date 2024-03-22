@@ -2,28 +2,25 @@ package hauke.aufgabe.rules;
 
 import hauke.aufgabe.Card;
 import hauke.aufgabe.Hand;
-import hauke.aufgabe.HandResult;
+import hauke.aufgabe.problem.EvaluationException;
+import hauke.aufgabe.result.ValuesListResult;
 
 import java.util.List;
-import java.util.stream.Stream;
+import java.util.function.Predicate;
 
-public class HighCardRule extends AbstractPokerRule<List<Card>> {
+public class HighCardRule extends AbstractPokerRule {
     @Override
-    public boolean applicable(Hand hand) {
-        return isValidHand(hand).isPresent();
+    public Predicate<Hand> applicationPredicate() {
+        return hand -> true;
     }
 
     @Override
-    public HandResult<List<Card>> rank(Hand hand) {
-        List<Card> resortedCards = hand.getCards().stream().sorted().toList().reversed();
-        return isValidHand(hand)
-                .map(Hand::getCards)
-                .map(Stream::of)
-                .map(Stream::sorted)
-                .map(Stream::toList)
-                .map(List::reversed)
-                .map(cards -> {
-                    return new HandResult<>(Hand.Rank.HIGH_CARD, resortedCards);
-                }).orElse(null);
+    public ValuesListResult evaluate(Hand hand) throws EvaluationException {
+        List<Card.Value> values = hand.getCards()
+                .stream()
+                .sorted(Card::compareDescending)
+                .map(Card::getValue)
+                .toList();
+        return new ValuesListResult(Hand.Rank.HIGH_CARD, values);
     }
 }

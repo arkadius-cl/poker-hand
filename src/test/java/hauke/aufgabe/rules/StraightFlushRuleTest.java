@@ -2,6 +2,7 @@ package hauke.aufgabe.rules;
 
 import hauke.aufgabe.Card;
 import hauke.aufgabe.Hand;
+import hauke.aufgabe.result.ValueResult;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -11,13 +12,13 @@ public class StraightFlushRuleTest {
     public void emptyHand_shouldNotBeApplicable() {
         Hand hand = new Hand();
         StraightFlushRule rule = new StraightFlushRule();
-        Assertions.assertThat(rule.applicable(hand)).isFalse();
+        Assertions.assertThat(rule.isApplicable(hand)).isFalse();
     }
 
     @Test
     public void nullHand_shouldNotBeApplicable() {
         StraightFlushRule rule = new StraightFlushRule();
-        Assertions.assertThat(rule.applicable(null)).isFalse();
+        Assertions.assertThat(rule.isApplicable(null)).isFalse();
     }
 
     @Test
@@ -30,7 +31,7 @@ public class StraightFlushRuleTest {
         hand.addCard(new Card(Card.Value.NINE, Card.Suit.HEARTS));
 
         StraightFlushRule rule = new StraightFlushRule();
-        Assertions.assertThat(rule.applicable(hand)).isFalse();
+        Assertions.assertThat(rule.isApplicable(hand)).isFalse();
     }
 
     @Test
@@ -43,7 +44,7 @@ public class StraightFlushRuleTest {
         hand.addCard(new Card(Card.Value.TEN, Card.Suit.CLUBS));
 
         StraightFlushRule rule = new StraightFlushRule();
-        Assertions.assertThat(rule.applicable(hand)).isFalse();
+        Assertions.assertThat(rule.isApplicable(hand)).isFalse();
     }
 
     @Test
@@ -56,7 +57,7 @@ public class StraightFlushRuleTest {
         hand.addCard(new Card(Card.Value.TEN, Card.Suit.HEARTS));
 
         StraightFlushRule rule = new StraightFlushRule();
-        Assertions.assertThat(rule.applicable(hand)).isTrue();
+        Assertions.assertThat(rule.isApplicable(hand)).isTrue();
     }
 
     @Test
@@ -69,7 +70,9 @@ public class StraightFlushRuleTest {
         hand.addCard(new Card(Card.Value.TEN, Card.Suit.HEARTS));
 
         StraightFlushRule rule = new StraightFlushRule();
-        Assertions.assertThat(rule.rank(hand).handRank()).isEqualTo(Hand.Rank.STRAIGHT_FLUSH);
+        ValueResult result = rule.evaluate(hand);
+        Assertions.assertThat(result.rank()).isEqualTo(Hand.Rank.STRAIGHT_FLUSH);
+        Assertions.assertThat(result.value()).isEqualTo(Card.Value.ACE);
     }
 
     @Test
@@ -82,9 +85,10 @@ public class StraightFlushRuleTest {
         hand.addCard(new Card(Card.Value.ACE, Card.Suit.HEARTS));
 
         StraightFlushRule rule = new StraightFlushRule();
-        Assertions.assertThat(rule.applicable(hand)).isTrue();
-        Assertions.assertThat(rule.rank(hand).handRank()).isEqualTo(Hand.Rank.STRAIGHT_FLUSH);
-        Assertions.assertThat(rule.rank(hand).payload()).isEqualTo(Card.Value.FIVE);
+        Assertions.assertThat(rule.isApplicable(hand)).isTrue();
+        ValueResult result = rule.evaluate(hand);
+        Assertions.assertThat(result.rank()).isEqualTo(Hand.Rank.STRAIGHT_FLUSH);
+        Assertions.assertThat(result.value()).isEqualTo(Card.Value.FIVE);
     }
 
     @Test
@@ -97,8 +101,9 @@ public class StraightFlushRuleTest {
         hand.addCard(new Card(Card.Value.TEN, Card.Suit.HEARTS));
 
         StraightFlushRule rule = new StraightFlushRule();
-        Assertions.assertThat(rule.applicable(hand)).isTrue();
-        Assertions.assertThat(rule.rank(hand).handRank()).isEqualTo(Hand.Rank.STRAIGHT_FLUSH);
-        Assertions.assertThat(rule.rank(hand).payload()).isEqualTo(Card.Value.ACE);
+        Assertions.assertThat(rule.isApplicable(hand)).isTrue();
+        ValueResult result = rule.evaluate(hand);
+        Assertions.assertThat(result.rank()).isEqualTo(Hand.Rank.STRAIGHT_FLUSH);
+        Assertions.assertThat(result.value()).isEqualTo(Card.Value.ACE);
     }
 }

@@ -1,25 +1,43 @@
 package hauke.aufgabe.rules;
 
 import hauke.aufgabe.Hand;
-import hauke.aufgabe.HandResult;
+import hauke.aufgabe.problem.EvaluationException;
+import hauke.aufgabe.result.EvaluationResult;
 
+import java.util.Optional;
 import java.util.function.Predicate;
 
-public interface EvaluationRule<T> {
-
+public interface EvaluationRule {
 
     /**
-     * Returns a predicate that checks if the rule is applicable to the given hand.
+     * Checks if the rule is applicable to the given hand.
+     *
+     * @param hand the hand to check
+     * @return true if the rule is applicable, false otherwise
+     */
+    default boolean isApplicable(Hand hand) {
+        return Optional
+                .ofNullable(hand)
+                .filter(suppliedHand -> suppliedHand.getCards().size() == 5)
+                .filter(applicationPredicate())
+                .isPresent();
+    }
+
+    /**
+     * Returns the predicate that should be used to check if the rule is applicable.
      *
      * @return the predicate
      */
-    Predicate<Hand> isApplicablePredicate();
+    Predicate<Hand> applicationPredicate();
 
     /**
      * Evaluates the given hand and returns the result.
      *
      * @param hand the hand to evaluate
      * @return the result of the evaluation
+     * @throws EvaluationException if the evaluation fails
      */
-    HandResult<T> evaluate(Hand hand);
+    EvaluationResult evaluate(Hand hand) throws EvaluationException;
+
+
 }
