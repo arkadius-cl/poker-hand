@@ -1,9 +1,6 @@
 package hauke.aufgabe;
 
-import hauke.aufgabe.ranks.HighCardEvaluator;
-import hauke.aufgabe.ranks.PairEvaluator;
-import hauke.aufgabe.ranks.RankEvaluator;
-import hauke.aufgabe.ranks.TwoPairEvaluator;
+import hauke.aufgabe.ranks.*;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -19,12 +16,14 @@ public class Hand {
         HIGH_CARD(HighCardEvaluator::new),
         PAIR(PairEvaluator::new),
         TWO_PAIR(TwoPairEvaluator::new),
-        THREE_OF_A_KIND,
-        STRAIGHT,
-        FLUSH,
-        FULL_HOUSE,
-        FOUR_OF_A_KIND,
-        STRAIGHT_FLUSH;
+        THREE_OF_KIND(ThreeOfKindEvaluator::new),
+        STRAIGHT(StraightEvaluator::new),
+        FLUSH(FlushEvaluator::new),
+        FULL_HOUSE(FullHouseEvaluator::new),
+        FOUR_OF_KIND(FourOfKind::new),
+        STRAIGHT_FLUSH(StraightEvaluator::new);
+
+        @Getter
         private final Supplier<RankEvaluator> evaluator;
     }
 

@@ -22,6 +22,6 @@ public class FourOfKindRule extends AbstractPokerRule {
         if (cards.size() != 1) {
             throw new EvaluationException("Four of a kind rule not applicable");
         }
-        return new RuleValueResult(Hand.Rank.FOUR_OF_A_KIND, cards.getFirst());
+        return new RuleValueResult(Hand.Rank.FOUR_OF_KIND, cards.getFirst());
     }
 }

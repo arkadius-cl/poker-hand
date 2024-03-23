@@ -32,7 +32,7 @@ public class ThreeOfKindRuleTest {
 
         ThreeOfKindRule threeOfKindRule = new ThreeOfKindRule();
         RuleValueResult result = threeOfKindRule.evaluate(hand);
-        Assertions.assertThat(result.rank()).isEqualTo(Hand.Rank.THREE_OF_A_KIND);
+        Assertions.assertThat(result.rank()).isEqualTo(Hand.Rank.THREE_OF_KIND);
         Assertions.assertThat(result.value()).isEqualTo(Card.Value.TWO);
     }
 
@@ -47,7 +47,7 @@ public class ThreeOfKindRuleTest {
 
         ThreeOfKindRule threeOfKindRule = new ThreeOfKindRule();
         RuleValueResult result = threeOfKindRule.evaluate(hand);
-        Assertions.assertThat(result.rank()).isEqualTo(Hand.Rank.THREE_OF_A_KIND);
+        Assertions.assertThat(result.rank()).isEqualTo(Hand.Rank.THREE_OF_KIND);
         Assertions.assertThat(result.value()).isEqualTo(Card.Value.TWO);
     }
 

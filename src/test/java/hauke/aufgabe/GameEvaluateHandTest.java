@@ -34,7 +34,7 @@ public class GameEvaluateHandTest {
         hand.addCard(new Card(Card.Value.ACE, Card.Suit.HEARTS));
 
         RuleValueResult result = (RuleValueResult) game.evaluateHand(hand);
-        Assertions.assertThat(result.rank()).isEqualTo(Hand.Rank.THREE_OF_A_KIND);
+        Assertions.assertThat(result.rank()).isEqualTo(Hand.Rank.THREE_OF_KIND);
         Assertions.assertThat(result.value()).isEqualTo(Card.Value.TWO);
     }
 
@@ -49,7 +49,7 @@ public class GameEvaluateHandTest {
         hand.addCard(new Card(Card.Value.ACE, Card.Suit.HEARTS));
 
         RuleValueResult result = (RuleValueResult) game.evaluateHand(hand);
-        Assertions.assertThat(result.rank()).isEqualTo(Hand.Rank.FOUR_OF_A_KIND);
+        Assertions.assertThat(result.rank()).isEqualTo(Hand.Rank.FOUR_OF_KIND);
         Assertions.assertThat(result.value()).isEqualTo(Card.Value.TWO);
     }
 

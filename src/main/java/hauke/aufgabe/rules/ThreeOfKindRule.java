@@ -21,6 +21,6 @@ public class ThreeOfKindRule extends AbstractPokerRule {
         if (values.size() != 1) {
             throw new EvaluationException("Three of a kind rule not applicable");
         }
-        return new RuleValueResult(Hand.Rank.THREE_OF_A_KIND, values.getFirst());
+        return new RuleValueResult(Hand.Rank.THREE_OF_KIND, values.getFirst());
     }
 }

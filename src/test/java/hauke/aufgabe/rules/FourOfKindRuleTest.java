@@ -33,7 +33,7 @@ public class FourOfKindRuleTest {
         Assertions.assertThat(rule.isApplicable(hand)).isTrue();
         RuleValueResult result = rule.evaluate(hand);
         Assertions.assertThat(result.value()).isEqualTo(Card.Value.TWO);
-        Assertions.assertThat(result.rank()).isEqualTo(Hand.Rank.FOUR_OF_A_KIND);
+        Assertions.assertThat(result.rank()).isEqualTo(Hand.Rank.FOUR_OF_KIND);
 
     }
 
