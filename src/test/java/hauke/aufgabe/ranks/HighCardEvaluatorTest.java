@@ -32,4 +32,16 @@ public class HighCardEvaluatorTest {
         String winner = highCardEvaluator.evaluate(List.of(bob, adam, charlie, daniel));
         Assertions.assertThat(winner).isEqualTo("Daniel");
     }
+
+    @Test
+    public void fourHandEvaluationResults_allCardsEsceptLastAreSame_shouldReturnTwoWinner() {
+        HandEvaluationResult adam = new HandEvaluationResult("Adam", new RuleValuesListResult(Hand.Rank.HIGH_CARD, List.of(Card.Value.JACK, Card.Value.TEN, Card.Value.NINE, Card.Value.EIGHT, Card.Value.TWO)));
+        HandEvaluationResult bob = new HandEvaluationResult("Bob", new RuleValuesListResult(Hand.Rank.HIGH_CARD, List.of(Card.Value.JACK, Card.Value.TEN, Card.Value.NINE, Card.Value.EIGHT, Card.Value.THREE)));
+        HandEvaluationResult charlie = new HandEvaluationResult("Charlie", new RuleValuesListResult(Hand.Rank.HIGH_CARD, List.of(Card.Value.JACK, Card.Value.TEN, Card.Value.NINE, Card.Value.EIGHT, Card.Value.TWO)));
+        HandEvaluationResult daniel = new HandEvaluationResult("Daniel", new RuleValuesListResult(Hand.Rank.HIGH_CARD, List.of(Card.Value.JACK, Card.Value.TEN, Card.Value.NINE, Card.Value.EIGHT, Card.Value.THREE)));
+
+        HighCardEvaluator highCardEvaluator = new HighCardEvaluator();
+        String winner = highCardEvaluator.evaluate(List.of(bob, adam, charlie, daniel));
+        Assertions.assertThat(winner).isEqualTo("Bob, Daniel");
+    }
 }
