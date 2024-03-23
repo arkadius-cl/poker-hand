@@ -1,7 +1,7 @@
 package hauke.aufgabe;
 
-import hauke.aufgabe.result.ValueResult;
-import hauke.aufgabe.result.ValuesListResult;
+import hauke.aufgabe.result.RuleValueResult;
+import hauke.aufgabe.result.RuleValuesListResult;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -17,7 +17,7 @@ public class GameEvaluateHandTest {
         hand.addCard(new Card(Card.Value.THREE, Card.Suit.DIAMONDS));
         hand.addCard(new Card(Card.Value.ACE, Card.Suit.HEARTS));
 
-        ValuesListResult result = (ValuesListResult) game.evaluateHand(hand);
+        RuleValuesListResult result = (RuleValuesListResult) game.evaluateHand(hand);
         Assertions.assertThat(result.rank()).isEqualTo(Hand.Rank.TWO_PAIR);
         Assertions.assertThat(result.value().size()).isEqualTo(2);
         Assertions.assertThat(result.value()).containsExactlyInAnyOrder(Card.Value.TWO, Card.Value.THREE);
@@ -33,7 +33,7 @@ public class GameEvaluateHandTest {
         hand.addCard(new Card(Card.Value.THREE, Card.Suit.DIAMONDS));
         hand.addCard(new Card(Card.Value.ACE, Card.Suit.HEARTS));
 
-        ValueResult result = (ValueResult) game.evaluateHand(hand);
+        RuleValueResult result = (RuleValueResult) game.evaluateHand(hand);
         Assertions.assertThat(result.rank()).isEqualTo(Hand.Rank.THREE_OF_A_KIND);
         Assertions.assertThat(result.value()).isEqualTo(Card.Value.TWO);
     }
@@ -48,7 +48,7 @@ public class GameEvaluateHandTest {
         hand.addCard(new Card(Card.Value.TWO, Card.Suit.SPADES));
         hand.addCard(new Card(Card.Value.ACE, Card.Suit.HEARTS));
 
-        ValueResult result = (ValueResult) game.evaluateHand(hand);
+        RuleValueResult result = (RuleValueResult) game.evaluateHand(hand);
         Assertions.assertThat(result.rank()).isEqualTo(Hand.Rank.FOUR_OF_A_KIND);
         Assertions.assertThat(result.value()).isEqualTo(Card.Value.TWO);
     }
@@ -63,7 +63,7 @@ public class GameEvaluateHandTest {
         hand.addCard(new Card(Card.Value.THREE, Card.Suit.DIAMONDS));
         hand.addCard(new Card(Card.Value.THREE, Card.Suit.HEARTS));
 
-        ValueResult result = (ValueResult) game.evaluateHand(hand);
+        RuleValueResult result = (RuleValueResult) game.evaluateHand(hand);
         Assertions.assertThat(result.rank()).isEqualTo(Hand.Rank.FULL_HOUSE);
         Assertions.assertThat(result.value()).isEqualTo(Card.Value.TWO);
     }
@@ -78,7 +78,7 @@ public class GameEvaluateHandTest {
         hand.addCard(new Card(Card.Value.QUEEN, Card.Suit.CLUBS));
         hand.addCard(new Card(Card.Value.SEVEN, Card.Suit.CLUBS));
 
-        ValuesListResult result = (ValuesListResult) game.evaluateHand(hand);
+        RuleValuesListResult result = (RuleValuesListResult) game.evaluateHand(hand);
         Assertions.assertThat(result.rank()).isEqualTo(Hand.Rank.FLUSH);
         Assertions.assertThat(result.value()).containsExactly(
                 Card.Value.QUEEN,
@@ -98,7 +98,7 @@ public class GameEvaluateHandTest {
         hand.addCard(new Card(Card.Value.THREE, Card.Suit.DIAMONDS));
         hand.addCard(new Card(Card.Value.FOUR, Card.Suit.CLUBS));
         hand.addCard(new Card(Card.Value.FIVE, Card.Suit.SPADES));
-        ValueResult result = (ValueResult) game.evaluateHand(hand);
+        RuleValueResult result = (RuleValueResult) game.evaluateHand(hand);
         Assertions.assertThat(result.rank()).isEqualTo(Hand.Rank.STRAIGHT);
         Assertions.assertThat(result.value()).isEqualTo(Card.Value.SIX);
     }
@@ -113,7 +113,7 @@ public class GameEvaluateHandTest {
         hand.addCard(new Card(Card.Value.FIVE, Card.Suit.HEARTS));
         hand.addCard(new Card(Card.Value.SIX, Card.Suit.HEARTS));
 
-        ValueResult result = (ValueResult) game.evaluateHand(hand);
+        RuleValueResult result = (RuleValueResult) game.evaluateHand(hand);
         Assertions.assertThat(result.rank()).isEqualTo(Hand.Rank.STRAIGHT_FLUSH);
         Assertions.assertThat(result.value()).isEqualTo(Card.Value.SIX);
     }
@@ -127,7 +127,7 @@ public class GameEvaluateHandTest {
         hand.addCard(new Card(Card.Value.FOUR, Card.Suit.CLUBS));
         hand.addCard(new Card(Card.Value.FIVE, Card.Suit.SPADES));
         hand.addCard(new Card(Card.Value.NINE, Card.Suit.HEARTS));
-        ValuesListResult result = (ValuesListResult) game.evaluateHand(hand);
+        RuleValuesListResult result = (RuleValuesListResult) game.evaluateHand(hand);
         Assertions.assertThat(result.rank()).isEqualTo(Hand.Rank.HIGH_CARD);
         Assertions.assertThat(result.value().getFirst()).isEqualTo(Card.Value.NINE);
     }
@@ -141,7 +141,7 @@ public class GameEvaluateHandTest {
         hand.addCard(new Card(Card.Value.FOUR, Card.Suit.CLUBS));
         hand.addCard(new Card(Card.Value.FIVE, Card.Suit.SPADES));
         hand.addCard(new Card(Card.Value.ACE, Card.Suit.HEARTS));
-        ValueResult result = (ValueResult) game.evaluateHand(hand);
+        RuleValueResult result = (RuleValueResult) game.evaluateHand(hand);
         Assertions.assertThat(result.rank()).isEqualTo(Hand.Rank.PAIR);
         Assertions.assertThat(result.value()).isEqualTo(Card.Value.TWO);
     }

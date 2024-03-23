@@ -2,7 +2,7 @@ package hauke.aufgabe.rules;
 
 import hauke.aufgabe.Card;
 import hauke.aufgabe.Hand;
-import hauke.aufgabe.result.ValueResult;
+import hauke.aufgabe.result.RuleValueResult;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -33,7 +33,7 @@ public class StraightRuleTest {
 
         StraightRule straightRule = new StraightRule();
         Assertions.assertThat(straightRule.isApplicable(hand)).isTrue();
-        ValueResult result = straightRule.evaluate(hand);
+        RuleValueResult result = straightRule.evaluate(hand);
         Assertions.assertThat(result.rank()).isEqualTo(Hand.Rank.STRAIGHT);
         Assertions.assertThat(result.value()).isEqualTo(Card.Value.SIX);
     }
@@ -49,7 +49,7 @@ public class StraightRuleTest {
 
         StraightRule straightRule = new StraightRule();
         Assertions.assertThat(straightRule.isApplicable(hand)).isTrue();
-        ValueResult result = straightRule.evaluate(hand);
+        RuleValueResult result = straightRule.evaluate(hand);
         Assertions.assertThat(result.rank()).isEqualTo(Hand.Rank.STRAIGHT);
         Assertions.assertThat(result.value()).isEqualTo(Card.Value.FIVE);
     }
@@ -65,7 +65,7 @@ public class StraightRuleTest {
 
         StraightRule straightRule = new StraightRule();
         Assertions.assertThat(straightRule.isApplicable(hand)).isTrue();
-        ValueResult result = straightRule.evaluate(hand);
+        RuleValueResult result = straightRule.evaluate(hand);
         Assertions.assertThat(result.rank()).isEqualTo(Hand.Rank.STRAIGHT);
         Assertions.assertThat(result.value()).isEqualTo(Card.Value.ACE);
     }

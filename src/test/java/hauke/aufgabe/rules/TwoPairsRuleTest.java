@@ -2,7 +2,7 @@ package hauke.aufgabe.rules;
 
 import hauke.aufgabe.Card;
 import hauke.aufgabe.Hand;
-import hauke.aufgabe.result.ValuesListResult;
+import hauke.aufgabe.result.RuleValuesListResult;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -32,7 +32,7 @@ public class TwoPairsRuleTest {
 
         TwoPairsRule twoPairsRule = new TwoPairsRule();
         Assertions.assertThat(twoPairsRule.isApplicable(hand)).isTrue();
-        ValuesListResult result = twoPairsRule.evaluate(hand);
+        RuleValuesListResult result = twoPairsRule.evaluate(hand);
         Assertions.assertThat(result.rank()).isEqualTo(Hand.Rank.TWO_PAIR);
         Assertions.assertThat(result.value()).describedAs("Should only contain Card.Value.TWO and Card.Value.QUEEN").containsExactlyInAnyOrder(Card.Value.TWO, Card.Value.QUEEN);
     }

@@ -36,15 +36,15 @@ public class HandTest {
         IntStream
                 .range(0, 100)
                 .mapToObj(i -> new Hand())
-                .forEach(hand -> Assertions.assertThat(hand).matches((givenHand) -> StringUtils.isNotBlank(givenHand.getName())));
+                .forEach(hand -> Assertions.assertThat(hand).matches((givenHand) -> StringUtils.isNotBlank(givenHand.getPlayerName())));
     }
 
      @Test
     public void createTwoHandsWithDifferentNames_ShouldBeDifferent() {
         Hand hand1 = new Hand("Hand1");
         Hand hand2 = new Hand("Hand2");
-        Assertions.assertThat(hand1.getName()).isEqualTo("Hand1");
-        Assertions.assertThat(hand2.getName()).isEqualTo("Hand2");
-        Assertions.assertThat(hand1.getName()).isNotEqualTo(hand2.getName());
+        Assertions.assertThat(hand1.getPlayerName()).isEqualTo("Hand1");
+        Assertions.assertThat(hand2.getPlayerName()).isEqualTo("Hand2");
+        Assertions.assertThat(hand1.getPlayerName()).isNotEqualTo(hand2.getPlayerName());
     }
 }

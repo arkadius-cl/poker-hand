@@ -1,34 +1,42 @@
 package hauke.aufgabe;
 
+import hauke.aufgabe.ranks.HighCardEvaluator;
+import hauke.aufgabe.ranks.PairEvaluator;
+import hauke.aufgabe.ranks.RankEvaluator;
+import hauke.aufgabe.ranks.TwoPairEvaluator;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Supplier;
 
 public class Hand {
 
+    @RequiredArgsConstructor
     public enum Rank {
-        HIGH_CARD,
-        PAIR,
-        TWO_PAIR,
+        HIGH_CARD(HighCardEvaluator::new),
+        PAIR(PairEvaluator::new),
+        TWO_PAIR(TwoPairEvaluator::new),
         THREE_OF_A_KIND,
         STRAIGHT,
         FLUSH,
         FULL_HOUSE,
         FOUR_OF_A_KIND,
         STRAIGHT_FLUSH;
+        private final Supplier<RankEvaluator> evaluator;
     }
 
     @Getter
-    private final String name;
+    private final String playerName;
 
     public Hand() {
-        this.name = "Unnamed " + ((int) (Math.random() * 1000));
+        this.playerName = "Unnamed " + ((int) (Math.random() * 1000));
     }
 
     public Hand(String name) {
-        this.name = name;
+        this.playerName = name;
     }
 
     private final List<Card> cards = new ArrayList<>();

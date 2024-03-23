@@ -2,6 +2,6 @@ package hauke.aufgabe.result;
 
 import hauke.aufgabe.Hand;
 
-public interface EvaluationResult {
+public interface RuleEvaluationResult {
     Hand.Rank rank();
 }

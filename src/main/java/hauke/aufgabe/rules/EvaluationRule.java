@@ -2,7 +2,7 @@ package hauke.aufgabe.rules;
 
 import hauke.aufgabe.Hand;
 import hauke.aufgabe.problem.EvaluationException;
-import hauke.aufgabe.result.EvaluationResult;
+import hauke.aufgabe.result.RuleEvaluationResult;
 
 import java.util.Optional;
 import java.util.function.Predicate;
@@ -37,7 +37,7 @@ public interface EvaluationRule {
      * @return the result of the evaluation
      * @throws EvaluationException if the evaluation fails
      */
-    EvaluationResult evaluate(Hand hand) throws EvaluationException;
+    RuleEvaluationResult evaluate(Hand hand) throws EvaluationException;
 
 
 }

@@ -2,7 +2,7 @@ package hauke.aufgabe.rules;
 
 import hauke.aufgabe.Card;
 import hauke.aufgabe.Hand;
-import hauke.aufgabe.result.ValueResult;
+import hauke.aufgabe.result.RuleValueResult;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -31,7 +31,7 @@ public class ThreeOfKindRuleTest {
         hand.addCard(new Card(Card.Value.FOUR, Card.Suit.CLUBS));
 
         ThreeOfKindRule threeOfKindRule = new ThreeOfKindRule();
-        ValueResult result = threeOfKindRule.evaluate(hand);
+        RuleValueResult result = threeOfKindRule.evaluate(hand);
         Assertions.assertThat(result.rank()).isEqualTo(Hand.Rank.THREE_OF_A_KIND);
         Assertions.assertThat(result.value()).isEqualTo(Card.Value.TWO);
     }
@@ -46,7 +46,7 @@ public class ThreeOfKindRuleTest {
         hand.addCard(new Card(Card.Value.TWO, Card.Suit.HEARTS));
 
         ThreeOfKindRule threeOfKindRule = new ThreeOfKindRule();
-        ValueResult result = threeOfKindRule.evaluate(hand);
+        RuleValueResult result = threeOfKindRule.evaluate(hand);
         Assertions.assertThat(result.rank()).isEqualTo(Hand.Rank.THREE_OF_A_KIND);
         Assertions.assertThat(result.value()).isEqualTo(Card.Value.TWO);
     }
