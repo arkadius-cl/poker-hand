@@ -1,9 +1,9 @@
 package hauke.aufgabe.ranks;
 
-import hauke.aufgabe.result.HandEvaluationResult;
+import hauke.aufgabe.rules.EvaluationResult;
 
 import java.util.List;
 
 public interface RankEvaluator {
-    String evaluate(List<HandEvaluationResult> handResults);
+    String evaluate(List<EvaluationResult> handResults);
 }

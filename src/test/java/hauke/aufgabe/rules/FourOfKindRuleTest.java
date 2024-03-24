@@ -2,7 +2,6 @@ package hauke.aufgabe.rules;
 
 import hauke.aufgabe.Card;
 import hauke.aufgabe.Hand;
-import hauke.aufgabe.result.RuleValueResult;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -25,16 +24,32 @@ public class FourOfKindRuleTest {
     public void handWithFourOfKind_shouldBeApplicableAndReturnTwo() {
         Hand hand = new Hand();
         hand.addCard(new Card(Card.Value.TWO, Card.Suit.CLUBS));
+        hand.addCard(new Card(Card.Value.THREE, Card.Suit.CLUBS));
         hand.addCard(new Card(Card.Value.TWO, Card.Suit.DIAMONDS));
         hand.addCard(new Card(Card.Value.TWO, Card.Suit.HEARTS));
         hand.addCard(new Card(Card.Value.TWO, Card.Suit.SPADES));
-        hand.addCard(new Card(Card.Value.THREE, Card.Suit.CLUBS));
         FourOfKindRule rule = new FourOfKindRule();
         Assertions.assertThat(rule.isApplicable(hand)).isTrue();
-        RuleValueResult result = rule.evaluate(hand);
-        Assertions.assertThat(result.value()).isEqualTo(Card.Value.TWO);
+        EvaluationResult result = rule.evaluate(hand);
+        Assertions.assertThat(result.values()).hasSize(1);
+        Assertions.assertThat(result.values().getFirst()).isEqualTo(Card.Value.TWO);
         Assertions.assertThat(result.rank()).isEqualTo(Hand.Rank.FOUR_OF_KIND);
+    }
 
+    @Test
+    public void handWithFourAces_shouldBeApplicableAndReturnAce() {
+        Hand hand = new Hand();
+        hand.addCard(new Card(Card.Value.ACE, Card.Suit.CLUBS));
+        hand.addCard(new Card(Card.Value.ACE, Card.Suit.DIAMONDS));
+        hand.addCard(new Card(Card.Value.ACE, Card.Suit.HEARTS));
+        hand.addCard(new Card(Card.Value.ACE, Card.Suit.SPADES));
+        hand.addCard(new Card(Card.Value.TWO, Card.Suit.CLUBS));
+        FourOfKindRule rule = new FourOfKindRule();
+        Assertions.assertThat(rule.isApplicable(hand)).isTrue();
+        EvaluationResult result = rule.evaluate(hand);
+        Assertions.assertThat(result.values()).hasSize(1);
+        Assertions.assertThat(result.values().getFirst()).isEqualTo(Card.Value.ACE);
+        Assertions.assertThat(result.rank()).isEqualTo(Hand.Rank.FOUR_OF_KIND);
     }
 
     @Test

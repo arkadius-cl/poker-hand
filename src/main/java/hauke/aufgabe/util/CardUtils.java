@@ -6,7 +6,7 @@ import hauke.aufgabe.Card;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class CardUtils {
+public final class CardUtils {
 
     private CardUtils() {
     }
@@ -93,5 +93,29 @@ public class CardUtils {
         return aceLowStraight ? sortedCards.get(3) : sortedCards.getLast();
     }
 
+
+    /**
+     * Compares two cards in ascending order based on their values.
+     *
+     * @param first  the first card to compare
+     * @param second the second card to compare
+     * @return a negative integer if the first card is less than the second card, zero if they are equal,
+     *         or a positive integer if the first card is greater than the second card
+     */
+    public static int compareAscending(Card first, Card second) {
+        return Integer.compare(first.getValue().ordinal(), second.getValue().ordinal());
+    }
+
+    /**
+     * Compares two cards in descending order based on their values.
+     *
+     * @param first  the first card to compare
+     * @param second the second card to compare
+     * @return a negative integer if the first card is greater than the second card, zero if they are equal,
+     *         or a positive integer if the first card is less than the second card
+     */
+    public static int compareDescending(Card first, Card second) {
+        return Integer.compare(second.getValue().ordinal(), first.getValue().ordinal());
+    }
 
 }

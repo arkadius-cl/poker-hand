@@ -11,6 +11,7 @@ import java.util.function.Supplier;
 
 public class Hand {
 
+    @Getter
     @RequiredArgsConstructor
     public enum Rank {
         HIGH_CARD(HighCardEvaluator::new),
@@ -23,7 +24,6 @@ public class Hand {
         FOUR_OF_KIND(FourOfKind::new),
         STRAIGHT_FLUSH(StraightEvaluator::new);
 
-        @Getter
         private final Supplier<RankEvaluator> evaluator;
     }
 
@@ -55,7 +55,7 @@ public class Hand {
      * @param card the card to add
      * @throws IllegalArgumentException if the card is null, the hand is full or the card is already in the hand
      */
-    public void addCard(Card card) throws IllegalArgumentException {
+    public void addCard(Card card) {
         if (Objects.isNull(card)) {
             throw new IllegalArgumentException("Card must not be null");
         }

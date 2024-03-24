@@ -1,7 +1,9 @@
 package hauke.aufgabe.result;
 
 
-public record HandEvaluationResult(String name, RuleEvaluationResult result) implements Comparable<HandEvaluationResult> {
+import hauke.aufgabe.rules.EvaluationResult;
+
+public record HandEvaluationResult(String name, EvaluationResult result) implements Comparable<HandEvaluationResult> {
 
     @Override
     public int compareTo(HandEvaluationResult o) {

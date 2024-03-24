@@ -2,7 +2,6 @@ package hauke.aufgabe.rules;
 
 import hauke.aufgabe.Card;
 import hauke.aufgabe.Hand;
-import hauke.aufgabe.result.RuleValuesListResult;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -21,8 +20,8 @@ public class HighCardRuleTest {
 
         HighCardRule highCardRule = new HighCardRule();
         Assertions.assertThat(highCardRule.isApplicable(hand)).isTrue();
-        RuleValuesListResult result = highCardRule.evaluate(hand);
-        Assertions.assertThat(result.value()).isSortedAccordingTo(Comparator.comparing(Card.Value::ordinal).reversed());
+        EvaluationResult result = highCardRule.evaluate(hand);
+        Assertions.assertThat(result.values()).isSortedAccordingTo(Comparator.comparing(Card.Value::ordinal).reversed());
     }
 
     @Test
@@ -36,8 +35,8 @@ public class HighCardRuleTest {
 
         HighCardRule highCardRule = new HighCardRule();
         Assertions.assertThat(highCardRule.isApplicable(hand)).isTrue();
-        RuleValuesListResult result = highCardRule.evaluate(hand);
-        Assertions.assertThat(result.value()).isSortedAccordingTo(Comparator.comparing(Card.Value::ordinal).reversed());
+        EvaluationResult result = highCardRule.evaluate(hand);
+        Assertions.assertThat(result.values()).isSortedAccordingTo(Comparator.comparing(Card.Value::ordinal).reversed());
     }
 
     @Test

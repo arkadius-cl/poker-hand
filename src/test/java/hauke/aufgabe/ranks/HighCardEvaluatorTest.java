@@ -2,8 +2,7 @@ package hauke.aufgabe.ranks;
 
 import hauke.aufgabe.Card;
 import hauke.aufgabe.Hand;
-import hauke.aufgabe.result.HandEvaluationResult;
-import hauke.aufgabe.result.RuleValuesListResult;
+import hauke.aufgabe.rules.EvaluationResult;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -13,8 +12,8 @@ public class HighCardEvaluatorTest {
 
     @Test
     public void twoHandEvaluationResults_shouldReturnWinner() {
-        HandEvaluationResult adam = new HandEvaluationResult("Adam", new RuleValuesListResult(Hand.Rank.HIGH_CARD, List.of(Card.Value.ACE, Card.Value.KING, Card.Value.QUEEN, Card.Value.JACK, Card.Value.TEN)));
-        HandEvaluationResult bob = new HandEvaluationResult("Bob", new RuleValuesListResult(Hand.Rank.HIGH_CARD, List.of(Card.Value.ACE, Card.Value.QUEEN, Card.Value.QUEEN, Card.Value.JACK, Card.Value.NINE)));
+        EvaluationResult adam = new EvaluationResult(Hand.Rank.HIGH_CARD, new Hand("Adam"), List.of(Card.Value.ACE, Card.Value.KING, Card.Value.QUEEN, Card.Value.JACK, Card.Value.TEN));
+        EvaluationResult bob = new EvaluationResult(Hand.Rank.HIGH_CARD, new Hand("Bob"), List.of(Card.Value.ACE, Card.Value.QUEEN, Card.Value.QUEEN, Card.Value.JACK, Card.Value.NINE));
 
         HighCardEvaluator highCardEvaluator = new HighCardEvaluator();
         String winner = highCardEvaluator.evaluate(List.of(adam, bob));
@@ -23,10 +22,10 @@ public class HighCardEvaluatorTest {
 
     @Test
     public void fourHandEvaluationResults_allCardsExceptLastAreSame_shouldReturnWinner2() {
-        HandEvaluationResult adam = new HandEvaluationResult("Adam", new RuleValuesListResult(Hand.Rank.HIGH_CARD, List.of(Card.Value.JACK, Card.Value.TEN, Card.Value.NINE, Card.Value.EIGHT, Card.Value.TWO)));
-        HandEvaluationResult bob = new HandEvaluationResult("Bob", new RuleValuesListResult(Hand.Rank.HIGH_CARD, List.of(Card.Value.JACK, Card.Value.TEN, Card.Value.NINE, Card.Value.EIGHT, Card.Value.THREE)));
-        HandEvaluationResult charlie = new HandEvaluationResult("Charlie", new RuleValuesListResult(Hand.Rank.HIGH_CARD, List.of(Card.Value.JACK, Card.Value.TEN, Card.Value.NINE, Card.Value.EIGHT, Card.Value.TWO)));
-        HandEvaluationResult daniel = new HandEvaluationResult("Daniel", new RuleValuesListResult(Hand.Rank.HIGH_CARD, List.of(Card.Value.JACK, Card.Value.TEN, Card.Value.NINE, Card.Value.EIGHT, Card.Value.SIX)));
+        EvaluationResult adam = new EvaluationResult(Hand.Rank.HIGH_CARD, new Hand("Adam"), List.of(Card.Value.JACK, Card.Value.TEN, Card.Value.NINE, Card.Value.EIGHT, Card.Value.TWO));
+        EvaluationResult bob = new EvaluationResult(Hand.Rank.HIGH_CARD, new Hand("Bob"), List.of(Card.Value.JACK, Card.Value.TEN, Card.Value.NINE, Card.Value.EIGHT, Card.Value.THREE));
+        EvaluationResult charlie = new EvaluationResult(Hand.Rank.HIGH_CARD, new Hand("Charlie"), List.of(Card.Value.JACK, Card.Value.TEN, Card.Value.NINE, Card.Value.EIGHT, Card.Value.TWO));
+        EvaluationResult daniel = new EvaluationResult(Hand.Rank.HIGH_CARD, new Hand("Daniel"), List.of(Card.Value.JACK, Card.Value.TEN, Card.Value.NINE, Card.Value.EIGHT, Card.Value.SIX));
 
         HighCardEvaluator highCardEvaluator = new HighCardEvaluator();
         String winner = highCardEvaluator.evaluate(List.of(bob, adam, charlie, daniel));
@@ -35,10 +34,10 @@ public class HighCardEvaluatorTest {
 
     @Test
     public void fourHandEvaluationResults_allCardsEsceptLastAreSame_shouldReturnTwoWinner() {
-        HandEvaluationResult adam = new HandEvaluationResult("Adam", new RuleValuesListResult(Hand.Rank.HIGH_CARD, List.of(Card.Value.JACK, Card.Value.TEN, Card.Value.NINE, Card.Value.EIGHT, Card.Value.TWO)));
-        HandEvaluationResult bob = new HandEvaluationResult("Bob", new RuleValuesListResult(Hand.Rank.HIGH_CARD, List.of(Card.Value.JACK, Card.Value.TEN, Card.Value.NINE, Card.Value.EIGHT, Card.Value.THREE)));
-        HandEvaluationResult charlie = new HandEvaluationResult("Charlie", new RuleValuesListResult(Hand.Rank.HIGH_CARD, List.of(Card.Value.JACK, Card.Value.TEN, Card.Value.NINE, Card.Value.EIGHT, Card.Value.TWO)));
-        HandEvaluationResult daniel = new HandEvaluationResult("Daniel", new RuleValuesListResult(Hand.Rank.HIGH_CARD, List.of(Card.Value.JACK, Card.Value.TEN, Card.Value.NINE, Card.Value.EIGHT, Card.Value.THREE)));
+        EvaluationResult adam = new EvaluationResult(Hand.Rank.HIGH_CARD, new Hand("Adam"), List.of(Card.Value.JACK, Card.Value.TEN, Card.Value.NINE, Card.Value.EIGHT, Card.Value.TWO));
+        EvaluationResult bob = new EvaluationResult(Hand.Rank.HIGH_CARD, new Hand("Bob"), List.of(Card.Value.JACK, Card.Value.TEN, Card.Value.NINE, Card.Value.EIGHT, Card.Value.THREE));
+        EvaluationResult charlie = new EvaluationResult(Hand.Rank.HIGH_CARD, new Hand("Charlie"), List.of(Card.Value.JACK, Card.Value.TEN, Card.Value.NINE, Card.Value.EIGHT, Card.Value.TWO));
+        EvaluationResult daniel = new EvaluationResult(Hand.Rank.HIGH_CARD, new Hand("Daniel"), List.of(Card.Value.JACK, Card.Value.TEN, Card.Value.NINE, Card.Value.EIGHT, Card.Value.THREE));
 
         HighCardEvaluator highCardEvaluator = new HighCardEvaluator();
         String winner = highCardEvaluator.evaluate(List.of(bob, adam, charlie, daniel));

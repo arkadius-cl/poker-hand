@@ -1,22 +1,21 @@
 package hauke.aufgabe.ranks;
 
 import hauke.aufgabe.Card;
-import hauke.aufgabe.result.HandEvaluationResult;
-import hauke.aufgabe.result.RuleValueResult;
+import hauke.aufgabe.rules.EvaluationResult;
 
 import java.util.List;
 
 public class PairEvaluator implements RankEvaluator {
 
     @Override
-    public String evaluate(List<HandEvaluationResult> handResults) {
+    public String evaluate(List<EvaluationResult> handResults) {
         List<Card.Value> allPairs = handResults.stream()
-                .map(result -> ((RuleValueResult) result.result()).value())
+                .map(result -> result.values().getFirst())
                 .toList();
         Card.Value highestPair = findHighestPair(allPairs);
         List<String> winners = handResults.stream()
-                .filter(handResult -> ((RuleValueResult) handResult.result()).value() == highestPair)
-                .map(HandEvaluationResult::name)
+                .filter(handResult -> handResult.values().getFirst() == highestPair)
+                .map(evalResult -> evalResult.hand().getPlayerName())
                 .toList();
         return winners.size() == 1 ? winners.getFirst() : String.join(", ", winners);
     }

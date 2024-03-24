@@ -3,7 +3,6 @@ package hauke.aufgabe.rules;
 import hauke.aufgabe.Card;
 import hauke.aufgabe.Hand;
 import hauke.aufgabe.problem.EvaluationException;
-import hauke.aufgabe.result.RuleValueResult;
 import hauke.aufgabe.util.CardUtils;
 
 import java.util.List;
@@ -24,7 +23,7 @@ public class FullHouseRule implements EvaluationRule {
     }
 
     @Override
-    public RuleValueResult evaluate(Hand hand) throws EvaluationException {
+    public EvaluationResult evaluate(Hand hand) throws EvaluationException {
         Map<Card.Value, List<Card>> groupedByValue = CardUtils.groupByValue(hand.getCards());
         if (groupedByValue.entrySet().size() != 2) {
             throw new EvaluationException("Full house rule not applicable, because there are not two different values in the hand");
@@ -34,7 +33,7 @@ public class FullHouseRule implements EvaluationRule {
                 .stream()
                 .filter(entry -> entry.getValue().size() == 3)
                 .findFirst()
-                .map(entry -> new RuleValueResult(Hand.Rank.FULL_HOUSE, entry.getKey()))
+                .map(entry -> new EvaluationResult(Hand.Rank.FULL_HOUSE, hand, List.of(entry.getKey())))
                 .orElseThrow();
     }
 }

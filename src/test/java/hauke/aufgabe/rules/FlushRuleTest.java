@@ -2,7 +2,6 @@ package hauke.aufgabe.rules;
 
 import hauke.aufgabe.Card;
 import hauke.aufgabe.Hand;
-import hauke.aufgabe.result.RuleValuesListResult;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -49,9 +48,9 @@ public class FlushRuleTest {
 
         FlushRule flushRule = new FlushRule();
         Assertions.assertThat(flushRule.isApplicable(hand)).isTrue();
-        RuleValuesListResult result = flushRule.evaluate(hand);
+        EvaluationResult result = flushRule.evaluate(hand);
         Assertions.assertThat(result.rank()).isEqualTo(Hand.Rank.FLUSH);
-        Assertions.assertThat(result.value()).isSortedAccordingTo(Comparator.comparing(Card.Value::ordinal).reversed());
+        Assertions.assertThat(result.values()).isSortedAccordingTo(Comparator.comparing(Card.Value::ordinal).reversed());
     }
 
     @Test
@@ -65,9 +64,9 @@ public class FlushRuleTest {
 
         FlushRule flushRule = new FlushRule();
         Assertions.assertThat(flushRule.isApplicable(hand)).isTrue();
-        RuleValuesListResult result = flushRule.evaluate(hand);
+        EvaluationResult result = flushRule.evaluate(hand);
         Assertions.assertThat(result.rank()).isEqualTo(Hand.Rank.FLUSH);
-        Assertions.assertThat(result.value()).isSortedAccordingTo(Comparator.comparing(Card.Value::ordinal).reversed());
+        Assertions.assertThat(result.values()).isSortedAccordingTo(Comparator.comparing(Card.Value::ordinal).reversed());
     }
 
     @Test

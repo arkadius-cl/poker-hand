@@ -2,7 +2,6 @@ package hauke.aufgabe.rules;
 
 import hauke.aufgabe.Card;
 import hauke.aufgabe.Hand;
-import hauke.aufgabe.result.RuleValueResult;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -24,7 +23,7 @@ public class FullHouseRuleTest {
     }
 
     @Test
-    public void handWithFullHouse_shouldBeApplicableAndReturnFullHouseRank() {
+    public void handWithFullHouse_shouldReturnFullHouseRankWithFour() {
         Hand hand = new Hand();
         hand.addCard(new Card(Card.Value.TWO, Card.Suit.CLUBS));
         hand.addCard(new Card(Card.Value.TWO, Card.Suit.SPADES));
@@ -33,16 +32,14 @@ public class FullHouseRuleTest {
         hand.addCard(new Card(Card.Value.FOUR, Card.Suit.DIAMONDS));
 
         FullHouseRule fullHouseRule = new FullHouseRule();
-        boolean applicable = fullHouseRule.isApplicable(hand);
 
-        Assertions.assertThat(applicable).isTrue();
-        RuleValueResult result = fullHouseRule.evaluate(hand);
+        EvaluationResult result = fullHouseRule.evaluate(hand);
         Assertions.assertThat(result.rank()).isEqualTo(Hand.Rank.FULL_HOUSE);
-        Assertions.assertThat(result.value()).isEqualTo(Card.Value.FOUR);
+        Assertions.assertThat(result.values()).contains(Card.Value.FOUR);
     }
 
     @Test
-    public void handWithFullHouse_shouldReturnFullHouse() {
+    public void handWithFullHouse_shouldReturnFullHouseWithKing() {
         Hand hand = new Hand();
         hand.addCard(new Card(Card.Value.KING, Card.Suit.HEARTS));
         hand.addCard(new Card(Card.Value.KING, Card.Suit.DIAMONDS));
@@ -51,10 +48,10 @@ public class FullHouseRuleTest {
         hand.addCard(new Card(Card.Value.THREE, Card.Suit.HEARTS));
 
         FullHouseRule fullHouseRule = new FullHouseRule();
-        RuleValueResult result = fullHouseRule.evaluate(hand);
+        EvaluationResult result = fullHouseRule.evaluate(hand);
 
         Assertions.assertThat(result.rank()).isEqualTo(Hand.Rank.FULL_HOUSE);
-        Assertions.assertThat(result.value()).isEqualTo(Card.Value.KING);
+        Assertions.assertThat(result.values()).contains(Card.Value.KING);
     }
 
     @Test
@@ -68,7 +65,6 @@ public class FullHouseRuleTest {
 
         FullHouseRule fullHouseRule = new FullHouseRule();
         boolean applicable = fullHouseRule.isApplicable(hand);
-
         Assertions.assertThat(applicable).isFalse();
     }
 
@@ -83,7 +79,6 @@ public class FullHouseRuleTest {
 
         FullHouseRule fullHouseRule = new FullHouseRule();
         boolean applicable = fullHouseRule.isApplicable(hand);
-
         Assertions.assertThat(applicable).isFalse();
     }
 

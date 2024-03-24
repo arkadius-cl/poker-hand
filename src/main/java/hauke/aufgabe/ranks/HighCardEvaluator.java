@@ -1,11 +1,10 @@
 package hauke.aufgabe.ranks;
 
 import hauke.aufgabe.Card;
-import hauke.aufgabe.result.HandEvaluationResult;
-import hauke.aufgabe.result.RuleValuesListResult;
+import hauke.aufgabe.rules.EvaluationResult;
+import hauke.aufgabe.util.EvaluationResultUtils;
 import lombok.NoArgsConstructor;
 
-import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -13,7 +12,7 @@ import java.util.stream.Collectors;
 public class HighCardEvaluator implements RankEvaluator {
 
     @Override
-    public String evaluate(List<HandEvaluationResult> handResults) {
+    public String evaluate(List<EvaluationResult> handResults) {
         List<String> winners = List.of();
         for (int i = 0; i < 5; i++) {
             winners = findWinnersForIndex(handResults, i);
@@ -24,19 +23,12 @@ public class HighCardEvaluator implements RankEvaluator {
         return String.join(", ", winners);
     }
 
-    private Card.Value getHighestCardForIndex(List<HandEvaluationResult> handResults, int index) {
-        return handResults.stream()
-                .map(element -> ((RuleValuesListResult) element.result()).value().get(index))
-                .max(Comparator.comparingInt(Card.Value::ordinal))
-                .orElse(null);
-    }
-
-    private List<String> findWinnersForIndex(List<HandEvaluationResult> handResults, int index) {
-        Card.Value highestCard = getHighestCardForIndex(handResults, index);
+    private List<String> findWinnersForIndex(List<EvaluationResult> handResults, int index) {
+        Card.Value highestCard = EvaluationResultUtils.getHighestCardForIndex(handResults, EvaluationResult::values, index);
 
         return handResults.stream()
-                .filter(handResult -> ((RuleValuesListResult) handResult.result()).value().get(index) == highestCard)
-                .map(HandEvaluationResult::name)
+                .filter(handResult -> handResult.values().get(index) == highestCard)
+                .map(evalResult -> evalResult.hand().getPlayerName())
                 .collect(Collectors.toList());
     }
 

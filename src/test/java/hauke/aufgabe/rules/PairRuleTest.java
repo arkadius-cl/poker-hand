@@ -2,7 +2,6 @@ package hauke.aufgabe.rules;
 
 import hauke.aufgabe.Card;
 import hauke.aufgabe.Hand;
-import hauke.aufgabe.result.RuleValueResult;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -19,9 +18,9 @@ public class PairRuleTest {
 
         PairRule pairRule = new PairRule();
         Assertions.assertThat(pairRule.isApplicable(hand)).isTrue();
-        RuleValueResult result = pairRule.evaluate(hand);
+        EvaluationResult result = pairRule.evaluate(hand);
         Assertions.assertThat(result.rank()).isEqualTo(Hand.Rank.PAIR);
-        Assertions.assertThat(result.value()).isEqualTo(Card.Value.ACE);
+        Assertions.assertThat(result.values()).contains(Card.Value.ACE);
     }
 
     @Test
@@ -34,9 +33,9 @@ public class PairRuleTest {
         hand.addCard(new Card(Card.Value.JACK, Card.Suit.HEARTS));
 
         PairRule pairRule = new PairRule();
-        RuleValueResult result = pairRule.evaluate(hand);
+        EvaluationResult result = pairRule.evaluate(hand);
         Assertions.assertThat(result.rank()).isEqualTo(Hand.Rank.PAIR);
-        Assertions.assertThat(result.value()).isEqualTo(Card.Value.ACE);
+        Assertions.assertThat(result.values()).contains(Card.Value.ACE);
     }
 
     @Test
@@ -49,9 +48,9 @@ public class PairRuleTest {
         hand.addCard(new Card(Card.Value.JACK, Card.Suit.HEARTS));
 
         PairRule pairRule = new PairRule();
-        RuleValueResult result = pairRule.evaluate(hand);
+        EvaluationResult result = pairRule.evaluate(hand);
         Assertions.assertThat(result.rank()).isEqualTo(Hand.Rank.PAIR);
-        Assertions.assertThat(result.value()).isEqualTo(Card.Value.KING);
+        Assertions.assertThat(result.values()).contains(Card.Value.KING);
     }
 
     @Test

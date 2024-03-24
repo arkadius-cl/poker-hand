@@ -3,7 +3,6 @@ package hauke.aufgabe.rules;
 import hauke.aufgabe.Card;
 import hauke.aufgabe.Hand;
 import hauke.aufgabe.problem.EvaluationException;
-import hauke.aufgabe.result.RuleValuesListResult;
 import hauke.aufgabe.util.CardUtils;
 
 import java.util.List;
@@ -17,15 +16,15 @@ public class FlushRule implements EvaluationRule {
     }
 
     @Override
-    public RuleValuesListResult evaluate(Hand hand) throws EvaluationException {
+    public EvaluationResult evaluate(Hand hand) throws EvaluationException {
         if (!CardUtils.isOneSuit(hand.getCards())) {
             throw new EvaluationException("Hand is not a flush, because it does not have the same suit for all cards.");
         }
         List<Card.Value> values = hand.getCards()
                 .stream()
-                .sorted(Card::compareDescending)
+                .sorted(CardUtils::compareDescending)
                 .map(Card::getValue)
                 .toList();
-        return new RuleValuesListResult(Hand.Rank.FLUSH, values);
+        return new EvaluationResult(Hand.Rank.FLUSH, hand, values);
     }
 }

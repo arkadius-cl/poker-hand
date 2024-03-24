@@ -1,15 +1,11 @@
 package hauke.aufgabe;
 
 import hauke.aufgabe.problem.EvaluationException;
-import hauke.aufgabe.result.RuleEvaluationResult;
-import hauke.aufgabe.result.HandEvaluationResult;
 import hauke.aufgabe.rules.*;
 import lombok.NoArgsConstructor;
 
 import java.util.Comparator;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 
 @NoArgsConstructor
@@ -28,7 +24,7 @@ public class Game {
     );
 
 
-    RuleEvaluationResult evaluateHand(Hand hand) {
+    EvaluationResult evaluateHand(Hand hand) {
         for (EvaluationRule rule : rules) {
             if (rule.isApplicable(hand)) {
                 return rule.evaluate(hand);
@@ -38,23 +34,26 @@ public class Game {
     }
 
     public String evaluateGame(List<Hand> hands) throws EvaluationException {
-        // evaluate individual hands
-        List<HandEvaluationResult> handsEvaluationResult = hands.stream()
-                .map(hand -> new HandEvaluationResult(hand.getPlayerName(), evaluateHand(hand)))
+        // evaluate hands and store results
+        List<EvaluationResult> handEvaluationResults = hands.stream()
+                .map(this::evaluateHand)
                 .toList();
 
         // find max rank for game
-        Hand.Rank maxRank = handsEvaluationResult.stream().max(Comparator.comparingInt(o -> o.result().rank().ordinal()))
-                .map(gameResult -> gameResult.result().rank())
-                .orElseThrow(() -> new EvaluationException("No hands to evaluate"));
+        Hand.Rank maxRank = handEvaluationResults.stream().max(Comparator.comparingInt(evalResult -> evalResult.rank().ordinal()))
+                .map(EvaluationResult::rank)
+                .orElse(null);
+        //
+        if (maxRank == null) {
+            return "max rank is null, cannot determine winner";
+        }
 
         // check for winners
-        Map<String, RuleEvaluationResult> winners = handsEvaluationResult.stream()
-                .filter(hand -> hand.result().rank() == maxRank)
-                .collect(Collectors.toMap(HandEvaluationResult::name, HandEvaluationResult::result));
+        List<EvaluationResult> winners = handEvaluationResults.stream()
+                .filter(hand -> hand.rank() == maxRank).toList();
 
         if (winners.size() == 1) {
-            return winners.keySet().iterator().next();
+            return winners.getFirst().hand().getPlayerName();
         }
 
         // evaluate hands according to rank

@@ -1,5 +1,6 @@
 package hauke.aufgabe;
 
+import hauke.aufgabe.util.CardUtils;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -14,7 +15,7 @@ public class CardTest {
         Card card1 = new Card(Card.Value.TWO, Card.Suit.HEARTS);
         Card card2 = new Card(Card.Value.THREE, Card.Suit.HEARTS);
 
-        assertTrue(Card.compareAscending(card1, card2) < 0);
+        assertTrue(CardUtils.compareAscending(card1, card2) < 0);
     }
 
     @Test
@@ -22,7 +23,7 @@ public class CardTest {
         Card card1 = new Card(Card.Value.TWO, Card.Suit.HEARTS);
         Card card2 = new Card(Card.Value.THREE, Card.Suit.HEARTS);
 
-        assertTrue(Card.compareDescending(card1, card2) > 0);
+        assertTrue(CardUtils.compareDescending(card1, card2) > 0);
     }
 
     @Test

@@ -3,9 +3,10 @@ package hauke.aufgabe.rules;
 import hauke.aufgabe.Card;
 import hauke.aufgabe.Hand;
 import hauke.aufgabe.problem.EvaluationException;
-import hauke.aufgabe.result.RuleValueResult;
 import hauke.aufgabe.util.CardUtils;
 
+import java.util.List;
+import java.util.Objects;
 import java.util.function.Predicate;
 
 public class StraightFlushRule implements EvaluationRule {
@@ -16,11 +17,14 @@ public class StraightFlushRule implements EvaluationRule {
     }
 
     @Override
-    public RuleValueResult evaluate(Hand hand) throws EvaluationException {
+    public EvaluationResult evaluate(Hand hand) throws EvaluationException {
         if (!CardUtils.isOneSuit(hand.getCards())) {
             throw new EvaluationException("Straight flush rule not applicable, it contains multiple suits.");
         }
         Card.Value value = CardUtils.getStraightHighestValue(hand.getCards());
-        return new RuleValueResult(Hand.Rank.STRAIGHT_FLUSH, value);
+        if(Objects.isNull(value)){
+            throw new EvaluationException("Straight flush rule not applicable, no straight found.");
+        }
+        return new EvaluationResult(Hand.Rank.STRAIGHT_FLUSH, hand, List.of(value));
     }
 }
