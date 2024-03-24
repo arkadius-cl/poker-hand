@@ -8,7 +8,7 @@ import hauke.aufgabe.result.RuleValuesListResult;
 import java.util.List;
 import java.util.function.Predicate;
 
-public class HighCardRule extends AbstractPokerRule {
+public class HighCardRule implements EvaluationRule {
     @Override
     public Predicate<Hand> applicationPredicate() {
         return hand -> true;

@@ -4,18 +4,19 @@ import hauke.aufgabe.Card;
 import hauke.aufgabe.Hand;
 import hauke.aufgabe.problem.EvaluationException;
 import hauke.aufgabe.result.RuleValueResult;
+import hauke.aufgabe.util.CardUtils;
 
 import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
 
-public class FullHouseRule extends AbstractPokerRule {
+public class FullHouseRule implements EvaluationRule {
 
 
     @Override
     public Predicate<Hand> applicationPredicate() {
         return hand -> {
-            Map<Card.Value, List<Card>> groupedByValue = groupByValue(hand);
+            Map<Card.Value, List<Card>> groupedByValue = CardUtils.groupByValue(hand.getCards());
             return groupedByValue.size() == 2 &&
                     groupedByValue.values().stream().anyMatch(cards -> cards.size() == 3) &&
                     groupedByValue.values().stream().anyMatch(cards -> cards.size() == 2);
@@ -24,8 +25,8 @@ public class FullHouseRule extends AbstractPokerRule {
 
     @Override
     public RuleValueResult evaluate(Hand hand) throws EvaluationException {
-        Map<Card.Value, List<Card>> groupedByValue = groupByValue(hand);
-        if(groupedByValue.entrySet().size()!=2){
+        Map<Card.Value, List<Card>> groupedByValue = CardUtils.groupByValue(hand.getCards());
+        if (groupedByValue.entrySet().size() != 2) {
             throw new EvaluationException("Full house rule not applicable, because there are not two different values in the hand");
         }
         return groupedByValue

@@ -4,22 +4,23 @@ import hauke.aufgabe.Card;
 import hauke.aufgabe.Hand;
 import hauke.aufgabe.problem.EvaluationException;
 import hauke.aufgabe.result.RuleValueResult;
+import hauke.aufgabe.util.CardUtils;
 
 import java.util.function.Predicate;
 
-public class StraightFlushRule extends AbstractPokerRule {
+public class StraightFlushRule implements EvaluationRule {
 
     @Override
     public Predicate<Hand> applicationPredicate() {
-        return hand -> isOneSuit(hand) && getConsecutiveValuesAndReturnHighestValueCard(hand) != null;
+        return hand -> CardUtils.isOneSuit(hand.getCards()) && CardUtils.getStraightHighestValue(hand.getCards()) != null;
     }
 
     @Override
     public RuleValueResult evaluate(Hand hand) throws EvaluationException {
-        if (!isOneSuit(hand)) {
+        if (!CardUtils.isOneSuit(hand.getCards())) {
             throw new EvaluationException("Straight flush rule not applicable, it contains multiple suits.");
         }
-        Card.Value value = getConsecutiveValuesAndReturnHighestValueCard(hand);
+        Card.Value value = CardUtils.getStraightHighestValue(hand.getCards());
         return new RuleValueResult(Hand.Rank.STRAIGHT_FLUSH, value);
     }
 }
